@@ -464,12 +464,7 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!4 &521793763 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3803767506882829719, guid: cbb269099cd57437c81cb9f4b1396656, type: 3}
-  m_PrefabInstance: {fileID: 1243335363}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &667440518
+--- !u!1 &437460322
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -477,27 +472,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 667440520}
-  - component: {fileID: 667440519}
-  - component: {fileID: 667440521}
-  - component: {fileID: 667440523}
-  - component: {fileID: 667440522}
-  - component: {fileID: 667440524}
+  - component: {fileID: 437460325}
+  - component: {fileID: 437460323}
+  - component: {fileID: 437460324}
   m_Layer: 0
-  m_Name: rogues_24
+  m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!212 &667440519
+--- !u!212 &437460323
 SpriteRenderer:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 667440518}
+  m_GameObject: {fileID: 437460322}
   m_Enabled: 1
   m_CastShadows: 2
   m_ReceiveShadows: 1
@@ -549,6 +541,68 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!95 &437460324
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437460322}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 91680722a59044902bfbd8e635047436, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &437460325
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437460322}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 667440520}
+  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
+--- !u!4 &521793763 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3803767506882829719, guid: cbb269099cd57437c81cb9f4b1396656, type: 3}
+  m_PrefabInstance: {fileID: 1243335363}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &667440518
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 667440520}
+  - component: {fileID: 667440521}
+  - component: {fileID: 667440523}
+  - component: {fileID: 667440522}
+  - component: {fileID: 667440524}
+  m_Layer: 0
+  m_Name: Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &667440520
 Transform:
   m_ObjectHideFlags: 0
@@ -557,13 +611,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 667440518}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1, y: 0, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 437460325}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &667440521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -576,7 +631,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad2d11b82afe4fc1979ecbda4c02b18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  m_speed: 4
+  m_speed: 3.5
   m_spriteFlipper: {fileID: 667440524}
 --- !u!114 &667440522
 MonoBehaviour:
@@ -633,7 +688,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &667440524
 MonoBehaviour:
@@ -647,7 +702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 558a2299d2e73488581db0f0c5477262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteFlipper
-  m_spriteRenderer: {fileID: 667440519}
+  m_spriteRenderer: {fileID: 437460323}
   m_facingLeft: 1
 --- !u!1001 &798574786
 PrefabInstance:
@@ -1018,7 +1073,7 @@ Tilemap:
       - {fileID: 1572764865, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: 820307780, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: -249123763, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
-      m_AnimationSpeed: 7.8203745
+      m_AnimationSpeed: 6.1966114
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -5, y: 11, z: 0}
@@ -1036,7 +1091,7 @@ Tilemap:
       - {fileID: 1572764865, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: 820307780, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: -249123763, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
-      m_AnimationSpeed: 8.664595
+      m_AnimationSpeed: 9.17721
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
@@ -8159,7 +8214,7 @@ GameObject:
   - component: {fileID: 1719114298}
   - component: {fileID: 1719114297}
   m_Layer: 0
-  m_Name: Plane
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
