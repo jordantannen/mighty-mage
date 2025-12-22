@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float m_speed = 0;
+    [SerializeField] private float m_speed = 3;
 
     [Header("Visuals")]
     [SerializeField] private SpriteFlipper m_spriteFlipper;
@@ -17,14 +17,15 @@ public class PlayerController : MonoBehaviour
     
     // Visuals
     private int m_isMovingHash;
+    private const string k_IsMovingParam = "IsMoving";
     
-    void Start()
+    private void Start()
     {
         m_rb = GetComponent<Rigidbody>();
-        m_isMovingHash = Animator.StringToHash("IsMoving");
+        m_isMovingHash = Animator.StringToHash(k_IsMovingParam);
     }
     
-    void OnMove(InputValue movementValue)
+    private void OnMove(InputValue movementValue)
     {
         // Movement
         Vector2 movementVector = movementValue.Get<Vector2>();
