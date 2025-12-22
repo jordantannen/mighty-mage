@@ -476,7 +476,7 @@ GameObject:
   - component: {fileID: 437460323}
   - component: {fileID: 437460324}
   m_Layer: 0
-  m_Name: Visuals
+  m_Name: Player Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -631,8 +631,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad2d11b82afe4fc1979ecbda4c02b18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  m_speed: 3.5
+  m_speed: 3
   m_spriteFlipper: {fileID: 667440524}
+  m_spriteAnimator: {fileID: 437460324}
 --- !u!114 &667440522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1073,7 +1074,7 @@ Tilemap:
       - {fileID: 1572764865, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: 820307780, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: -249123763, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
-      m_AnimationSpeed: 6.1966114
+      m_AnimationSpeed: 9.4200535
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -5, y: 11, z: 0}
@@ -1091,7 +1092,7 @@ Tilemap:
       - {fileID: 1572764865, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: 820307780, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: -249123763, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
-      m_AnimationSpeed: 9.17721
+      m_AnimationSpeed: 5.8988833
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:

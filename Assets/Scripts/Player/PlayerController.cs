@@ -8,22 +8,33 @@ public class PlayerController : MonoBehaviour
 
     [Header("Visuals")]
     [SerializeField] private SpriteFlipper m_spriteFlipper;
+    [SerializeField] private Animator m_spriteAnimator;
     
+    // Movement
     private Rigidbody m_rb; 
     private float m_movementX;
     private float m_movementY;
     
+    // Visuals
+    private int m_isMovingHash;
+    
     void Start()
     {
         m_rb = GetComponent<Rigidbody>();
+        m_isMovingHash = Animator.StringToHash("IsMoving");
     }
     
     void OnMove(InputValue movementValue)
     {
+        // Movement
         Vector2 movementVector = movementValue.Get<Vector2>();
         m_movementX = movementVector.x; 
         m_movementY = movementVector.y; 
+        
+        // Visuals
         m_spriteFlipper.FlipSprite(m_movementX);
+        bool isMoving = movementVector.sqrMagnitude > 0;
+        m_spriteAnimator.SetBool(m_isMovingHash, isMoving);
     }
     
     private void FixedUpdate() 
