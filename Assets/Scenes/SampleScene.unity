@@ -592,10 +592,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 667440520}
-  - component: {fileID: 667440521}
   - component: {fileID: 667440523}
   - component: {fileID: 667440522}
+  - component: {fileID: 667440521}
   - component: {fileID: 667440524}
+  - component: {fileID: 667440525}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -705,6 +706,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpriteFlipper
   m_spriteRenderer: {fileID: 437460323}
   m_facingLeft: 1
+--- !u!114 &667440525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667440518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8899891bef544ba782a387330c90aa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthHandler
+  m_maxHealth: 100
+  m_currentHealth: 0
+  m_damageFlashDuration: 0.1
+  m_hasIFrames: 0
+  m_iFrameDuration: 1
+  m_visualRenderer: {fileID: 437460323}
+  m_damageFlashSprite: {fileID: 7829664951301647932, guid: 972f8f2a97bf0499ca272a529ae532f8, type: 3}
+  m_spriteAnimator: {fileID: 437460324}
 --- !u!1001 &798574786
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1074,7 +1095,7 @@ Tilemap:
       - {fileID: 1572764865, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: 820307780, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: -249123763, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
-      m_AnimationSpeed: 9.4200535
+      m_AnimationSpeed: 9.949509
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -5, y: 11, z: 0}
@@ -1092,7 +1113,7 @@ Tilemap:
       - {fileID: 1572764865, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: 820307780, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: -249123763, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
-      m_AnimationSpeed: 5.8988833
+      m_AnimationSpeed: 9.407535
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:

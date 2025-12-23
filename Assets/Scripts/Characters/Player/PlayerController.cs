@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(HealthHandler))]
 public class PlayerController : MonoBehaviour
 {
@@ -68,6 +67,15 @@ public class PlayerController : MonoBehaviour
     // {
     //     // If Other is enemy -> take damage
     // }
+    
+    private void Update()
+    {
+        if (Keyboard.current.tKey.wasPressedThisFrame)
+        {
+            TakeDamage(10);
+        }
+    }
+    
 
     private void PlayerDied()
     {
