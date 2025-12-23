@@ -36,6 +36,10 @@ public class HealthHandler : MonoBehaviour
         m_currentHealth = m_maxHealth;
     }
 
+    /// <summary>
+    /// Reduces current health
+    /// </summary>
+    /// <param name="damage"> Amount of damage to be taken </param>
     public void TakeDamage(int damage)
     {
         if (m_isInvincible) return;

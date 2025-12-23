@@ -5,6 +5,7 @@ using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(HealthHandler))]
+[RequireComponent(typeof(KnockbackHandler))]
 public class PlayerController : MonoBehaviour
 {
     // Events
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     // Movement
     private Rigidbody m_rb;
     private HealthHandler m_healthHandler;
+    private KnockbackHandler m_knockbackHandler;
     private float m_movementX;
     private float m_movementY;
     
@@ -29,8 +31,10 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         m_rb = GetComponent<Rigidbody>();
+        m_knockbackHandler = GetComponent<KnockbackHandler>();
         m_healthHandler = GetComponent<HealthHandler>();
         m_healthHandler.Initialize();
+        
         m_isMovingHash = Animator.StringToHash(k_IsMovingParam);
     }
     
@@ -57,8 +61,10 @@ public class PlayerController : MonoBehaviour
         m_spriteAnimator.SetBool(m_isMovingHash, isMoving);
     }
     
-    private void FixedUpdate() 
+    private void FixedUpdate()
     {
+        if (m_knockbackHandler.IsKnockedBack) return;
+        
         Vector3 movement = new Vector3 (m_movementX, 0.0f, m_movementY);
         m_rb.linearVelocity= movement * m_speed; 
     }
@@ -85,6 +91,7 @@ public class PlayerController : MonoBehaviour
     private void TakeDamage(int damage)
     {
         m_healthHandler.TakeDamage(damage);
+        m_knockbackHandler.ApplyKnockback(Vector3.forward); // TODO REMEMBER TO CHANGE
     }
 
 }

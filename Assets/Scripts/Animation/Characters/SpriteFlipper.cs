@@ -9,7 +9,7 @@ public class SpriteFlipper : MonoBehaviour
     /// <summary>
     /// Flips a sprite to face its movement direction
     /// </summary>
-    /// <param name="horizontalInput">The 'X' value of the movement vector</param>
+    /// <param name="horizontalInput"> The 'X' value of the movement vector </param>
     public void FlipSprite(float horizontalInput)
     {
         if (horizontalInput == 0) return;
