@@ -68,20 +68,10 @@ public class GameObjectPool : MonoBehaviour
     private void OnGetFromPool(GameObject obj)
     {
         obj.SetActive(true);
-        
-        if (obj.TryGetComponent<IPoolable>(out IPoolable poolable))
-        {
-            poolable.OnSpawn();
-        }
     }
 
     private void OnReturnToPool(GameObject obj)
     {
-        if (obj.TryGetComponent<IPoolable>(out IPoolable poolable))
-        {
-            poolable.OnDespawn();
-        }
-        
         obj.SetActive(false);
     }
 

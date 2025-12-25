@@ -19,6 +19,14 @@ public class KnockbackHandler : MonoBehaviour
         m_rb = GetComponent<Rigidbody>();
     }
     
+    public void Initialize()
+    {
+        StopAllCoroutines();
+        m_isKnockedBack = false;
+        m_knockbackCoroutine = null;
+        m_rb.linearVelocity = Vector3.zero;
+    }
+    
     /// <summary>
     /// Knocks the game object back in a given direction
     /// </summary>

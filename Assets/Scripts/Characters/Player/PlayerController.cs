@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(HealthHandler))]
@@ -16,17 +15,14 @@ public class PlayerController : MonoBehaviour
     [Header("Visuals")]
     [SerializeField] private SpriteFlipper m_spriteFlipper;
     [SerializeField] private Animator m_spriteAnimator;
+    private int m_isMovingHash;
+    private const string k_IsMovingParam = "IsMoving";
     
-    // Movement
     private Rigidbody m_rb;
     private HealthHandler m_healthHandler;
     private KnockbackHandler m_knockbackHandler;
     private float m_movementX;
     private float m_movementY;
-    
-    // Visuals
-    private int m_isMovingHash;
-    private const string k_IsMovingParam = "IsMoving";
     
     private void Awake()
     {
@@ -69,16 +65,21 @@ public class PlayerController : MonoBehaviour
         m_rb.linearVelocity= movement * m_speed; 
     }
 
-    // private void OnCollisionStay(Collision other)
-    // {
-    //     // If Other is enemy -> take damage
-    // }
+    private void OnCollisionStay(Collision other)
+    {
+        if (other.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
+        {
+            Vector3 knockbackDirection = (transform.position - other.transform.position).normalized;
+            TakeDamage(enemy.AttackPower, knockbackDirection);
+        }
+    }
+
     
     private void Update()
     {
         if (Keyboard.current.tKey.wasPressedThisFrame)
         {
-            TakeDamage(10);
+            TakeDamage(10, Vector3.forward);
         }
     }
     
@@ -88,10 +89,10 @@ public class PlayerController : MonoBehaviour
         OnPlayerDeath?.Invoke();
     }
 
-    private void TakeDamage(int damage)
+    private void TakeDamage(int damage, Vector3 knockbackDirection)
     {
         m_healthHandler.TakeDamage(damage);
-        m_knockbackHandler.ApplyKnockback(Vector3.forward); // TODO REMEMBER TO CHANGE
+        m_knockbackHandler.ApplyKnockback(knockbackDirection); 
     }
 
 }

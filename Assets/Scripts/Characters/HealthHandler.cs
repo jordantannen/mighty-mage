@@ -7,33 +7,37 @@ public class HealthHandler : MonoBehaviour
     // Events
     public event Action OnDeath;
     
-    // Stats
+    [Header("Stats")]
     [SerializeField] private int m_maxHealth = 100;
     [SerializeField] private int m_currentHealth;
-    [SerializeField] private float m_damageFlashDuration = 0.1f;
     
-    // IFrames
     [Header("IFrames")]
     [SerializeField] private bool m_hasIFrames;
     [SerializeField] private float m_iFrameDuration = 1f;
     private bool m_isInvincible; 
     
-    // Visuals
     [Header("Visuals")] 
+    [SerializeField] private Animator m_spriteAnimator;
     [SerializeField] private SpriteRenderer m_visualRenderer;
     [SerializeField] private Sprite m_damageFlashSprite;
-    [SerializeField] private Animator m_spriteAnimator;
+    [SerializeField] private float m_damageFlashDuration = 0.1f;
     private Sprite m_originalSprite;
     
     private void Awake()
     {
-        if (m_visualRenderer != null)
+        if (m_visualRenderer)
             m_originalSprite = m_visualRenderer.sprite;
     }
 
     public void Initialize()
     {
         m_currentHealth = m_maxHealth;
+        
+        // Ensure that if something dies mid-sprite flash, it'll reset
+        // upon respawn
+        StopAllCoroutines();
+        if (m_visualRenderer) m_visualRenderer.sprite = m_originalSprite;
+        if (m_spriteAnimator) m_spriteAnimator.enabled = true;
     }
 
     /// <summary>
