@@ -32,11 +32,18 @@ public class HealthHandler : MonoBehaviour
     public void Initialize()
     {
         m_currentHealth = m_maxHealth;
+        m_isInvincible = false;
         
         // Ensure that if something dies mid-sprite flash, it'll reset
         // upon respawn
         StopAllCoroutines();
-        if (m_visualRenderer) m_visualRenderer.sprite = m_originalSprite;
+        
+        // Only reset sprite if we have a valid original sprite
+        if (m_visualRenderer && m_originalSprite)
+        {
+            m_visualRenderer.sprite = m_originalSprite;
+        }
+        
         if (m_spriteAnimator) m_spriteAnimator.enabled = true;
     }
 
