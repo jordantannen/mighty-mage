@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class KnockbackHandler : MonoBehaviour
 {
+    public event Action OnKnockbackStart;
+    public event Action OnKnockbackEnd;
+    
     [Header("Knockback Settings")]
     [SerializeField] private float m_knockbackForce = 5f;
     [SerializeField] private float m_knockbackDuration = 0.2f;
@@ -21,6 +25,11 @@ public class KnockbackHandler : MonoBehaviour
     
     public void Initialize()
     {
+        if (!m_rb)
+        {
+            m_rb = GetComponent<Rigidbody>();
+        }
+        
         StopAllCoroutines();
         m_isKnockedBack = false;
         m_knockbackCoroutine = null;
@@ -47,6 +56,7 @@ public class KnockbackHandler : MonoBehaviour
     private IEnumerator KnockbackRoutine(Vector3 direction)
     {
         m_isKnockedBack = true;
+        OnKnockbackStart?.Invoke();
         
         // Reset velocity to ensure consistent knockback
         m_rb.linearVelocity = Vector3.zero;
@@ -58,6 +68,8 @@ public class KnockbackHandler : MonoBehaviour
         m_rb.linearVelocity = Vector3.zero;
         m_isKnockedBack = false;
         m_knockbackCoroutine = null;
+        
+        OnKnockbackEnd?.Invoke();   
     }
 }
 

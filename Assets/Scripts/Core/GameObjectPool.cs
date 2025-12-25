@@ -4,7 +4,7 @@ using UnityEngine.Pool;
 public class GameObjectPool : MonoBehaviour
 {
     [SerializeField] private GameObject m_prefab;
-    [SerializeField] private Transform m_parent;
+    [SerializeField] private Transform m_parent; // To put all enemies in one parent
     [SerializeField] private int m_defaultCapacity = 20;
     [SerializeField] private int m_maxSize = 100;
     
@@ -61,7 +61,7 @@ public class GameObjectPool : MonoBehaviour
 
     private GameObject CreatePooledObject()
     {
-        GameObject obj = Instantiate(m_prefab, m_parent);
+        GameObject obj = Instantiate(m_prefab, m_parent); 
         return obj;
     }
 

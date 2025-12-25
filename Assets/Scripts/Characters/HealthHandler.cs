@@ -51,9 +51,9 @@ public class HealthHandler : MonoBehaviour
     /// Reduces current health
     /// </summary>
     /// <param name="damage"> Amount of damage to be taken </param>
-    public void TakeDamage(int damage)
+    public bool TakeDamage(int damage)
     {
-        if (m_isInvincible) return;
+        if (m_isInvincible) return false;
         
         m_currentHealth -= damage;
 
@@ -71,6 +71,8 @@ public class HealthHandler : MonoBehaviour
         {
             StartCoroutine(ActivateIFrames());
         }
+
+        return true;
     }
     
     private IEnumerator DamageFlash()

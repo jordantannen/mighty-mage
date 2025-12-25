@@ -17,6 +17,7 @@ public class EnemySpawner : MonoBehaviour
     private void Start()
     {
         m_enemyPool.Preallocate(m_preallocateCount);
+        StartSpawning(5);
     }
 
     /// <summary>

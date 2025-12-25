@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour
     
     private void Update()
     {
+        // TODO: REMOVE THIS!
         if (Keyboard.current.tKey.wasPressedThisFrame)
         {
             TakeDamage(10, Vector3.forward);
@@ -91,8 +92,10 @@ public class PlayerController : MonoBehaviour
 
     private void TakeDamage(int damage, Vector3 knockbackDirection)
     {
-        m_healthHandler.TakeDamage(damage);
-        m_knockbackHandler.ApplyKnockback(knockbackDirection); 
+        if (m_healthHandler.TakeDamage(damage))
+        {
+            m_knockbackHandler.ApplyKnockback(knockbackDirection);
+        }
     }
 
 }
