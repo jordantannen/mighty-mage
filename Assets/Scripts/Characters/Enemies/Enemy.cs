@@ -9,8 +9,9 @@ public class Enemy : MonoBehaviour
     public event Action OnDeath;
     
     [Header("Stats")]
-    public int AttackPower = 10;
     [SerializeField] private int m_moveSpeed = 2;
+    [SerializeField] private int m_attackPower = 10;
+    public int AttackPower => m_attackPower;
     
     [Header("Visuals")] 
     [SerializeField] private SpriteFlipper m_spriteFlipper;
