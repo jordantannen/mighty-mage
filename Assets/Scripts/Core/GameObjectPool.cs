@@ -10,7 +10,28 @@ public class GameObjectPool : MonoBehaviour
     
     private ObjectPool<GameObject> m_pool;
 
+    /// <summary>
+    /// Configures the pool with a prefab at runtime. Call before using the pool.
+    /// </summary>
+    public void Initialize(GameObject prefab, Transform parent = null, int defaultCapacity = 20, int maxSize = 100)
+    {
+        m_prefab = prefab;
+        m_parent = parent;
+        m_defaultCapacity = defaultCapacity;
+        m_maxSize = maxSize;
+        CreatePool();
+    }
+
     private void Awake()
+    {
+        // Only create pool in Awake if prefab is set via inspector
+        if (m_prefab != null && m_pool == null)
+        {
+            CreatePool();
+        }
+    }
+
+    private void CreatePool()
     {
         m_pool = new ObjectPool<GameObject>(
             createFunc: CreatePooledObject,

@@ -6,18 +6,31 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Spawn Settings")]
-    [SerializeField] private GameObjectPool m_enemyPool;
+    [SerializeField] private GameObject m_enemyPrefab;
     [SerializeField] private Transform m_playerTarget;
     [SerializeField] private float m_spawnDistance = 10f; // From player
     [SerializeField] private float m_spawnRadiusVariation = 0.5f; 
+    [SerializeField] private float m_spawnRate = 2f;
     [SerializeField] private int m_preallocateCount = 20;
     
+    private GameObjectPool m_enemyPool;
     private readonly Dictionary<GameObject, Action> m_deathHandlers = new Dictionary<GameObject, Action>();
+
+    private void Awake()
+    {
+        CreatePool();
+    }
 
     private void Start()
     {
+        StartSpawning(m_spawnRate);
+    }
+
+    private void CreatePool()
+    {
+        m_enemyPool = gameObject.AddComponent<GameObjectPool>();
+        m_enemyPool.Initialize(m_enemyPrefab, transform);
         m_enemyPool.Preallocate(m_preallocateCount);
-        StartSpawning(5);
     }
 
     /// <summary>

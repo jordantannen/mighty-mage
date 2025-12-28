@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -14,8 +13,9 @@ public class Projectile : MonoBehaviour
     private GameObjectPool m_pool;
     private Rigidbody m_rigidbody;
 
-    public void Fire(int damage, float speed, Vector3 direction, GameObjectPool pool)
+    public void Fire(int damage, float speed, Vector3 launchPosition, Vector3 direction, GameObjectPool pool)
     {
+        transform.position = launchPosition;
         m_damage = damage;
         m_speed = speed;
         m_direction = direction;
