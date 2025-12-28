@@ -33,7 +33,12 @@ public class KnockbackHandler : MonoBehaviour
         StopAllCoroutines();
         m_isKnockedBack = false;
         m_knockbackCoroutine = null;
-        m_rb.linearVelocity = Vector3.zero;
+        
+        // This check prevents issues with characters on navmesh
+        if (!m_rb.isKinematic)
+        {
+            m_rb.linearVelocity = Vector3.zero;
+        }
     }
     
     /// <summary>
@@ -68,7 +73,7 @@ public class KnockbackHandler : MonoBehaviour
         m_rb.linearVelocity = Vector3.zero;
         m_isKnockedBack = false;
         m_knockbackCoroutine = null;
-        
+        Debug.Log($"Knockbacked {gameObject.name}");
         OnKnockbackEnd?.Invoke();   
     }
 }

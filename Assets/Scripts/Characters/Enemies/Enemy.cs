@@ -49,6 +49,8 @@ public class Enemy : MonoBehaviour
         m_knockbackHandler.OnKnockbackStart += DisableNavAgent;
         m_knockbackHandler.OnKnockbackEnd += EnableNavAgent;
         
+        EnableNavAgent();
+        
         m_healthHandler.Initialize();
         m_knockbackHandler.Initialize();
     }
