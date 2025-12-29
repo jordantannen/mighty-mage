@@ -48,11 +48,15 @@ public class Weapon : MonoBehaviour
             } 
             else if (m_weaponData.Type == WeaponData.TargetingType.MouseCursor)
             {
-                Vector3 direction = FindCursorDirection();
-                if (direction != Vector3.zero)
+                // TODO: See how this playtests
+                if (Keyboard.current.spaceKey.isPressed) 
                 {
-                    Attack(direction);
-                    m_nextFireTime = Time.time + (1f / m_weaponData.FireRate);
+                    Vector3 direction = FindCursorDirection();
+                    if (direction != Vector3.zero)
+                    {
+                        Attack(direction);
+                        m_nextFireTime = Time.time + (1f / m_weaponData.FireRate);
+                    }
                 }
             }
         }
