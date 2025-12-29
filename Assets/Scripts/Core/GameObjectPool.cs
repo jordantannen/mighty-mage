@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Pool;
 
+// TODO: See if this could be a regular C# class
 public class GameObjectPool : MonoBehaviour
 {
     [SerializeField] private GameObject m_prefab;

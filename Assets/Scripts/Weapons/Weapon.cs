@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Weapon : MonoBehaviour
 {
@@ -40,14 +41,24 @@ public class Weapon : MonoBehaviour
                 Enemy target = FindNearestEnemy();
                 if (target != null)
                 {
-                    Attack(target);
+                    Vector3 direction = (target.transform.position - transform.position).normalized;
+                    Attack(direction);
+                    m_nextFireTime = Time.time + (1f / m_weaponData.FireRate); // 1f is 1 second. 
+                }
+            } 
+            else if (m_weaponData.Type == WeaponData.TargetingType.MouseCursor)
+            {
+                Vector3 direction = FindCursorDirection();
+                if (direction != Vector3.zero)
+                {
+                    Attack(direction);
                     m_nextFireTime = Time.time + (1f / m_weaponData.FireRate);
                 }
             }
         }
     }
-
-    private void Attack(Enemy target)
+    
+    private void Attack(Vector3 direction)
     {
         GameObject projectileObj = m_projectilePool.Get();
         Projectile projectile = projectileObj.GetComponent<Projectile>();
@@ -58,7 +69,6 @@ public class Weapon : MonoBehaviour
             return;
         }
         
-        Vector3 direction = (target.transform.position - transform.position).normalized;
         projectile.Fire(m_weaponData.Damage, m_weaponData.ProjectileSpeed, transform.position, direction, m_projectilePool);
     }
 
@@ -84,5 +94,22 @@ public class Weapon : MonoBehaviour
         }
 
         return closestEnemy;
+    }
+
+    private Vector3 FindCursorDirection()
+    {
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
+        Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+        Plane groundPlane = new Plane(Vector3.up, new Vector3(0, transform.position.y, 0));
+        
+        if (groundPlane.Raycast(ray, out float distance))
+        {
+            Vector3 hitPoint = ray.GetPoint(distance);
+            Vector3 direction = (hitPoint - transform.position).normalized;
+            direction.y = 0; // Ensure horizontal
+            return direction;
+        }
+        
+        return Vector3.zero;
     }
 }
