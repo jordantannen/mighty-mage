@@ -6,7 +6,9 @@ public class WeaponData : ScriptableObject
     public enum TargetingType
     {
         NearestEnemy,
-        MouseCursor
+        MouseCursor,
+        Orbit,
+        PulseAOE
     }
     
     [Header("General")]
@@ -26,6 +28,14 @@ public class WeaponData : ScriptableObject
     [Header("Projectile")]
     [SerializeField] private GameObject m_projectilePrefab;
 
+    [Header("Orbit Settings")]
+    [SerializeField] private float m_orbitRadius = 2f;
+    [SerializeField] private float m_orbitSpeed = 180f; // Degrees per second
+    [SerializeField] private int m_orbitProjectileCount = 3;
+
+    [Header("Pulse Settings")]
+    [SerializeField] private float m_pulseRadius;
+
     // Public accessors
     
     // General
@@ -44,5 +54,13 @@ public class WeaponData : ScriptableObject
     
     // Projectile
     public GameObject ProjectilePrefab => m_projectilePrefab;
+    
+    // Orbit
+    public float OrbitRadius => m_orbitRadius;
+    public float OrbitSpeed => m_orbitSpeed;
+    public int OrbitProjectileCount => m_orbitProjectileCount;
+    
+    // Pulse
+    public float PulseRadius => m_pulseRadius;
 }
 
