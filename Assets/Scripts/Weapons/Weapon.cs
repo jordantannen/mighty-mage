@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,15 +7,9 @@ public class Weapon : MonoBehaviour
     [SerializeField] private WeaponData m_weaponData;
     [SerializeField] private int m_preallocateCount = 10;
     
-    // TODO: Replace with VFX
-    [Header("Pulse Visuals")]
-    [SerializeField] private float m_pulseVisualDuration = 0.3f;
-    [SerializeField] private Color m_pulseColor = Color.cyan;
-    
     private GameObjectPool m_projectilePool; 
     private float m_nextFireTime;
-    
-    private LineRenderer m_pulseLineRenderer;
+    private Rigidbody m_parentRigidbody; // For physics-accurate spawn position
     
     public void Initialize(WeaponData data)
     {
@@ -27,6 +20,9 @@ public class Weapon : MonoBehaviour
     // TODO: Remove this when done debugging
     private void Awake()
     {
+        // Cache parent rigidbody for physics-accurate spawn positions
+        m_parentRigidbody = GetComponentInParent<Rigidbody>();
+        
         // If weaponData is already set via inspector, initialize now
         if (m_weaponData != null)
         {
@@ -40,14 +36,12 @@ public class Weapon : MonoBehaviour
         {
             case WeaponData.TargetingType.NearestEnemy:
             case WeaponData.TargetingType.MouseCursor:
+            case WeaponData.TargetingType.RadialBurst:
                 CreatePool();
                 break;
             case WeaponData.TargetingType.Orbit:
                 CreatePool();
                 SpawnOrbitingProjectiles();
-                break;
-            case WeaponData.TargetingType.PulseAOE:
-                CreatePulseLineRenderer();
                 break;
         }
     }
@@ -86,9 +80,9 @@ public class Weapon : MonoBehaviour
                     }
                 }
             }
-            else if (m_weaponData.Type == WeaponData.TargetingType.PulseAOE)
+            else if (m_weaponData.Type == WeaponData.TargetingType.RadialBurst)
             {
-                Pulse();
+                FireRadialBurst();
                 m_nextFireTime = Time.time + (1f / m_weaponData.FireRate);
             }
         }
@@ -105,7 +99,10 @@ public class Weapon : MonoBehaviour
             return;
         }
         
-        projectile.Fire(m_weaponData.Damage, m_weaponData.ProjectileSpeed, transform.position, direction, m_projectilePool);
+        // Add player velocity so projectiles move relative to player motion
+        // This prevents the "behind player" effect when moving
+        Vector3 inheritedVelocity = !m_parentRigidbody ? m_parentRigidbody.linearVelocity : Vector3.zero;
+        projectile.Fire(m_weaponData.Damage, m_weaponData.ProjectileSpeed, transform.position, direction, m_projectilePool, inheritedVelocity);
     }
 
     private Enemy FindNearestEnemy()
@@ -177,59 +174,16 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    private void Pulse()
+    private void FireRadialBurst()
     {
-        Vector3 center = transform.parent.position;
-        Collider[] hits = Physics.OverlapSphere(center, m_weaponData.PulseRadius);
+        int count = m_weaponData.BurstProjectileCount;
+        float angleStep = 360f / count;
         
-        foreach (Collider hit in hits)
-        {
-            if (hit.TryGetComponent<Enemy>(out Enemy enemy))
-            {
-                enemy.GetComponent<HealthHandler>().TakeDamage(m_weaponData.Damage);
-            }
-        }
-        
-        // Show pulse visual
-        StartCoroutine(ShowPulseVisual());
-    }
-    
-    private IEnumerator ShowPulseVisual()
-    {
-        m_pulseLineRenderer.enabled = true;
-        yield return new WaitForSeconds(m_pulseVisualDuration);
-        m_pulseLineRenderer.enabled = false;
-    }
-    
-    // For debugging and prototyping
-    private void CreatePulseLineRenderer()
-    {
-        GameObject lineObj = new GameObject("PulseVisual");
-        lineObj.transform.SetParent(transform.parent); // Follow the player
-        lineObj.transform.localPosition = Vector3.zero; // Center on player
-        
-        m_pulseLineRenderer = lineObj.AddComponent<LineRenderer>();
-        m_pulseLineRenderer.useWorldSpace = false; // Positions are relative to parent
-        m_pulseLineRenderer.loop = true;
-        m_pulseLineRenderer.startWidth = 0.1f;
-        m_pulseLineRenderer.endWidth = 0.1f;
-        m_pulseLineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        m_pulseLineRenderer.startColor = m_pulseColor;
-        m_pulseLineRenderer.endColor = m_pulseColor;
-        
-        // Create circle points
-        int segments = 32;
-        m_pulseLineRenderer.positionCount = segments;
-        float angleStep = 360f / segments;
-        float radius = m_weaponData.PulseRadius;
-        
-        for (int i = 0; i < segments; i++)
+        for (int i = 0; i < count; i++)
         {
             float angle = i * angleStep * Mathf.Deg2Rad;
-            Vector3 point = new Vector3(Mathf.Cos(angle) * radius, 0.1f, Mathf.Sin(angle) * radius);
-            m_pulseLineRenderer.SetPosition(i, point);
+            Vector3 direction = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
+            Attack(direction);
         }
-        
-        m_pulseLineRenderer.enabled = false; // Hidden until pulse fires
     }
 }

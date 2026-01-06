@@ -13,18 +13,20 @@ public class Projectile : MonoBehaviour
     private GameObjectPool m_pool;
     private Rigidbody m_rigidbody;
 
-    public void Fire(int damage, float speed, Vector3 launchPosition, Vector3 direction, GameObjectPool pool)
+    public void Fire(int damage, float speed, Vector3 launchPosition, Vector3 direction, GameObjectPool pool, Vector3 inheritedVelocity = default)
     {
-        transform.position = launchPosition;
         m_damage = damage;
         m_speed = speed;
         m_direction = direction;
         m_pool = pool;
         
+        transform.position = launchPosition;
+        
         StopAllCoroutines();
         StartCoroutine(ReturnAfterLifetime());
 
-        m_rigidbody.linearVelocity = m_direction.normalized * m_speed;
+        // Add inherited velocity (e.g., from player movement) so projectiles move relative to source
+        m_rigidbody.linearVelocity = (m_direction.normalized * m_speed) + inheritedVelocity;
     }
 
     private void Awake()
@@ -34,6 +36,8 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!other.gameObject.activeInHierarchy) return;
+        
         if (other.TryGetComponent<Enemy>(out Enemy enemy))
         {
             enemy.GetComponent<HealthHandler>().TakeDamage(m_damage);

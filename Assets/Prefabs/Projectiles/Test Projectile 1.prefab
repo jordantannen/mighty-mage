@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 7860422892369960621}
   - component: {fileID: 3745257272015109188}
   - component: {fileID: 655585990441031236}
-  - component: {fileID: 8475720300779242839}
+  - component: {fileID: 8728498757400373444}
   m_Layer: 0
-  m_Name: Test Projectile
+  m_Name: Test Projectile 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -144,7 +144,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 36
   m_CollisionDetection: 0
---- !u!114 &8475720300779242839
+--- !u!114 &8728498757400373444
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -153,6 +153,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 551291378101705978}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb9e06a439c4470398fc0dde0aa3fe22, type: 3}
+  m_Script: {fileID: 11500000, guid: ae089b5cedbd4d08a32698d044322acf, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::OrbitingProjectile
+  m_EditorClassIdentifier: Assembly-CSharp::Projectile
+  m_maxLifetime: 5

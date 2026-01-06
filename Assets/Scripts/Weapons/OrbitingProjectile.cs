@@ -47,6 +47,8 @@ public class OrbitingProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!other.gameObject.activeInHierarchy) return;
+        
         if (other.TryGetComponent<Enemy>(out Enemy enemy))
         {
             enemy.GetComponent<HealthHandler>().TakeDamage(m_damage);

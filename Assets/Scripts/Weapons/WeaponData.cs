@@ -8,7 +8,7 @@ public class WeaponData : ScriptableObject
         NearestEnemy,
         MouseCursor,
         Orbit,
-        PulseAOE
+        RadialBurst
     }
     
     [Header("General")]
@@ -33,8 +33,8 @@ public class WeaponData : ScriptableObject
     [SerializeField] private float m_orbitSpeed = 180f; // Degrees per second
     [SerializeField] private int m_orbitProjectileCount = 3;
 
-    [Header("Pulse Settings")]
-    [SerializeField] private float m_pulseRadius;
+    [Header("Radial Burst Settings")]
+    [SerializeField] private int m_burstProjectileCount = 8;
 
     // Public accessors
     
@@ -60,7 +60,6 @@ public class WeaponData : ScriptableObject
     public float OrbitSpeed => m_orbitSpeed;
     public int OrbitProjectileCount => m_orbitProjectileCount;
     
-    // Pulse
-    public float PulseRadius => m_pulseRadius;
+    // Radial Burst
+    public int BurstProjectileCount => m_burstProjectileCount;
 }
-
