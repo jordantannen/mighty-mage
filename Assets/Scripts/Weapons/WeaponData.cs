@@ -8,7 +8,8 @@ public class WeaponData : ScriptableObject
         NearestEnemy,
         MouseCursor,
         Orbit,
-        RadialBurst
+        RadialBurst,
+        Bouncing
     }
     
     [Header("General")]
@@ -36,6 +37,10 @@ public class WeaponData : ScriptableObject
     [Header("Radial Burst Settings")]
     [SerializeField] private int m_burstProjectileCount = 8;
 
+    [Header("Bounce Settings")]
+    [SerializeField] private int m_bounceCount = 3;
+    [SerializeField] private float m_bounceRange = 5f;
+
     // Public accessors
     
     // General
@@ -62,4 +67,8 @@ public class WeaponData : ScriptableObject
     
     // Radial Burst
     public int BurstProjectileCount => m_burstProjectileCount;
+    
+    // Bounce
+    public int BounceCount => m_bounceCount;
+    public float BounceRange => m_bounceRange;
 }

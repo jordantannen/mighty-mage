@@ -37,6 +37,7 @@ public class Weapon : MonoBehaviour
             case WeaponData.TargetingType.NearestEnemy:
             case WeaponData.TargetingType.MouseCursor:
             case WeaponData.TargetingType.RadialBurst:
+            case WeaponData.TargetingType.Bouncing:
                 CreatePool();
                 break;
             case WeaponData.TargetingType.Orbit:
@@ -85,10 +86,20 @@ public class Weapon : MonoBehaviour
                 FireRadialBurst();
                 m_nextFireTime = Time.time + (1f / m_weaponData.FireRate);
             }
+            else if (m_weaponData.Type == WeaponData.TargetingType.Bouncing)
+            {
+                Enemy target = FindNearestEnemy();
+                if (target != null)
+                {
+                    Vector3 direction = (target.transform.position - transform.position).normalized;
+                    AttackBouncing(direction);
+                    m_nextFireTime = Time.time + (1f / m_weaponData.FireRate);
+                }
+            }
         }
     }
     
-    private void Attack(Vector3 direction)
+    private void Attack(Vector3 direction, bool inheritVelocity = false)
     {
         GameObject projectileObj = m_projectilePool.Get();
         Projectile projectile = projectileObj.GetComponent<Projectile>();
@@ -99,10 +110,36 @@ public class Weapon : MonoBehaviour
             return;
         }
         
-        // Add player velocity so projectiles move relative to player motion
-        // This prevents the "behind player" effect when moving
-        Vector3 inheritedVelocity = !m_parentRigidbody ? m_parentRigidbody.linearVelocity : Vector3.zero;
+        // Only inherit velocity for radial burst to keep projectiles centered on moving player
+        Vector3 inheritedVelocity = Vector3.zero;
+        if (inheritVelocity && m_parentRigidbody != null)
+        {
+            inheritedVelocity = m_parentRigidbody.linearVelocity;
+        }
+        
         projectile.Fire(m_weaponData.Damage, m_weaponData.ProjectileSpeed, transform.position, direction, m_projectilePool, inheritedVelocity);
+    }
+
+    private void AttackBouncing(Vector3 direction)
+    {
+        GameObject projectileObj = m_projectilePool.Get();
+        BouncingProjectile projectile = projectileObj.GetComponent<BouncingProjectile>();
+        if (!projectile)
+        {
+            Debug.LogError($"BouncingProjectile component not found on {projectileObj.name}. Make sure the prefab has BouncingProjectile, not Projectile.");
+            m_projectilePool.Return(projectileObj);
+            return;
+        }
+        
+        projectile.Fire(
+            m_weaponData.Damage, 
+            m_weaponData.ProjectileSpeed, 
+            transform.position, 
+            direction, 
+            m_projectilePool, 
+            m_weaponData.BounceCount, 
+            m_weaponData.BounceRange
+        );
     }
 
     private Enemy FindNearestEnemy()
@@ -183,7 +220,7 @@ public class Weapon : MonoBehaviour
         {
             float angle = i * angleStep * Mathf.Deg2Rad;
             Vector3 direction = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
-            Attack(direction);
+            Attack(direction, inheritVelocity: true);
         }
     }
 }
