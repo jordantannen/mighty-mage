@@ -9,7 +9,7 @@ public class Weapon : MonoBehaviour
     
     private GameObjectPool m_projectilePool; 
     private float m_nextFireTime;
-    private Rigidbody m_parentRigidbody; // For physics-accurate spawn position
+    private Rigidbody m_parentRigidbody;
     
     public void Initialize(WeaponData data)
     {
@@ -20,9 +20,9 @@ public class Weapon : MonoBehaviour
     // TODO: Remove this when done debugging
     private void Awake()
     {
-        // Cache parent rigidbody for physics-accurate spawn positions
+        // Needed so radial burst can inherit the player's velocity so it doesn't lag behind
         m_parentRigidbody = GetComponentInParent<Rigidbody>();
-        
+
         // If weaponData is already set via inspector, initialize now
         if (m_weaponData != null)
         {
@@ -116,7 +116,7 @@ public class Weapon : MonoBehaviour
         {
             inheritedVelocity = m_parentRigidbody.linearVelocity;
         }
-        
+
         projectile.Fire(m_weaponData.Damage, m_weaponData.ProjectileSpeed, transform.position, direction, m_projectilePool, inheritedVelocity);
     }
 

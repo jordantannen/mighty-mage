@@ -10,18 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 634d50dae52645a797f7f02e3bee7b79, type: 3}
-  m_Name: TestWeapon 1
+  m_Name: Autoshoot
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  m_weaponName: Test Weapon
-  m_description: Weapon description.
+  m_weaponName: 
+  m_description: 
   m_icon: {fileID: 0}
   m_targetingType: 0
-  m_maxRange: 8.3
+  m_maxRange: 5
   m_damage: 10
-  m_fireRate: 2.56
-  m_projectileSpeed: 5
-  m_projectilePrefab: {fileID: 551291378101705978, guid: f178390096169485aa07a94064833877, type: 3}
+  m_fireRate: 1
+  m_projectileSpeed: 10
+  m_projectilePrefab: {fileID: 0}
   m_orbitRadius: 2
   m_orbitSpeed: 180
   m_orbitProjectileCount: 3
   m_burstProjectileCount: 8
+  m_bounceCount: 3
+  m_bounceRange: 5
