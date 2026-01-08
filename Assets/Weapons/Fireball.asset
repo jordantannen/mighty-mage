@@ -10,18 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 634d50dae52645a797f7f02e3bee7b79, type: 3}
-  m_Name: TestWeapon
+  m_Name: Fireball
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  m_weaponName: Test Weapon
-  m_description: Weapon description.
-  m_icon: {fileID: 0}
-  m_targetingType: 2
+  m_weaponName: Fireball
+  m_description: 'Ol'' Reliable. '
+  m_icon: {fileID: -4222694904841360918, guid: c6ae1aef1dc7844dab7806fcf711ea85, type: 3}
+  m_targetingType: 1
   m_maxRange: 5
-  m_damage: 10
+  m_damage: 5
   m_fireRate: 1
-  m_projectileSpeed: 5
-  m_projectilePrefab: {fileID: 551291378101705978, guid: 8eb2d94ba14824df4b715e9e6d5f2628, type: 3}
+  m_projectileSpeed: 4
+  m_knockbackForce: 5
+  m_projectilePrefab: {fileID: 2045019846639956861, guid: eefe716bdef8a4f0ca3db38effd1b95c, type: 3}
   m_orbitRadius: 2
   m_orbitSpeed: 180
   m_orbitProjectileCount: 3
   m_burstProjectileCount: 8
+  m_bounceCount: 3
+  m_bounceRange: 5

@@ -6,21 +6,31 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private float m_maxLifetime = 5f; // In seconds
+    [SerializeField] private Transform m_visualTransform; 
     
     private int m_damage;
     private float m_speed;
+    private float m_knockbackForce;
     private Vector3 m_direction;
     private GameObjectPool m_pool;
     private Rigidbody m_rigidbody;
 
-    public void Fire(int damage, float speed, Vector3 launchPosition, Vector3 direction, GameObjectPool pool, Vector3 inheritedVelocity = default)
+    public void Fire(int damage, float speed, float knockbackForce, Vector3 launchPosition, Vector3 direction, GameObjectPool pool, Vector3 inheritedVelocity = default)
     {
         m_damage = damage;
         m_speed = speed;
+        m_knockbackForce = knockbackForce;
         m_direction = direction;
         m_pool = pool;
         
         transform.position = launchPosition;
+        
+        if (m_visualTransform != null)
+        {
+            float angle = Mathf.Atan2(direction.z, direction.x) * Mathf.Rad2Deg;
+            // Assume the sprite is facing left by default!
+            m_visualTransform.rotation = Quaternion.Euler(0, 0, angle + 180f); 
+        }
         
         StopAllCoroutines();
         StartCoroutine(ReturnAfterLifetime());
@@ -41,6 +51,15 @@ public class Projectile : MonoBehaviour
         if (other.TryGetComponent<Enemy>(out Enemy enemy))
         {
             enemy.GetComponent<HealthHandler>().TakeDamage(m_damage);
+            
+            // Only apply knockback if enemy is still active (not killed by damage)
+            if (enemy.gameObject.activeInHierarchy)
+            {
+                // Apply knockback in the direction the projectile was traveling
+                Vector3 knockbackDirection = m_direction.normalized;
+                enemy.GetComponent<KnockbackHandler>().ApplyKnockback(knockbackDirection, m_knockbackForce);
+            }
+            
             ReturnToPool();
         }
     }

@@ -119,6 +119,52 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &98320537
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 98320538}
+  - component: {fileID: 98320539}
+  m_Layer: 0
+  m_Name: Spectral Swords
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &98320538
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98320537}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.518, z: 0.338}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 667440520}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &98320539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98320537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35490595bb7640f2826cd0172e2e5acb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Weapon
+  m_weaponData: {fileID: 11400000, guid: 1dc94f7bb5c8d46f789814459a46a203, type: 2}
+  m_preallocateCount: 10
 --- !u!4 &99382871 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7950630314389007915, guid: 9aaf3554947e14fe3ab6ad0e80995760, type: 3}
@@ -685,52 +731,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3803767506882829719, guid: cbb269099cd57437c81cb9f4b1396656, type: 3}
   m_PrefabInstance: {fileID: 1243335363}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &623206741
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 623206742}
-  - component: {fileID: 623206743}
-  m_Layer: 0
-  m_Name: Test Weapon (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &623206742
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 623206741}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.518, z: 0.338}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 667440520}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &623206743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 623206741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35490595bb7640f2826cd0172e2e5acb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Weapon
-  m_weaponData: {fileID: 11400000, guid: 8f901a2e100bc4b94bd59fa067a241fa, type: 2}
-  m_preallocateCount: 10
 --- !u!1 &667440518
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,7 +769,7 @@ Transform:
   m_Children:
   - {fileID: 437460325}
   - {fileID: 1837161166}
-  - {fileID: 623206742}
+  - {fileID: 98320538}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &667440521
@@ -1789,7 +1789,7 @@ Tilemap:
       - {fileID: 1572764865, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: 820307780, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: -249123763, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
-      m_AnimationSpeed: 9.8705
+      m_AnimationSpeed: 6.0563555
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 6, y: 5, z: 0}
@@ -1807,7 +1807,7 @@ Tilemap:
       - {fileID: 1572764865, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: 820307780, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: -249123763, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
-      m_AnimationSpeed: 5.307151
+      m_AnimationSpeed: 8.108421
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 7, y: 5, z: 0}
@@ -1825,7 +1825,7 @@ Tilemap:
       - {fileID: 1572764865, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: 820307780, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: -249123763, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
-      m_AnimationSpeed: 6.0757637
+      m_AnimationSpeed: 7.396709
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 8, y: 5, z: 0}
@@ -1843,7 +1843,7 @@ Tilemap:
       - {fileID: 1572764865, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: 820307780, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: -249123763, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
-      m_AnimationSpeed: 6.299594
+      m_AnimationSpeed: 9.285273
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 9, y: 5, z: 0}
@@ -1861,7 +1861,7 @@ Tilemap:
       - {fileID: 1572764865, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: 820307780, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: -249123763, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
-      m_AnimationSpeed: 5.2163963
+      m_AnimationSpeed: 5.9401674
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 5, y: 6, z: 0}
@@ -1879,7 +1879,7 @@ Tilemap:
       - {fileID: 1572764865, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: 820307780, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: -249123763, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
-      m_AnimationSpeed: 6.1212816
+      m_AnimationSpeed: 9.3366
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 6, y: 6, z: 0}
@@ -1897,7 +1897,7 @@ Tilemap:
       - {fileID: 1572764865, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: 820307780, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: -249123763, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
-      m_AnimationSpeed: 8.491374
+      m_AnimationSpeed: 7.9000697
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 7, y: 6, z: 0}
@@ -1915,7 +1915,7 @@ Tilemap:
       - {fileID: 1572764865, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: 820307780, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: -249123763, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
-      m_AnimationSpeed: 9.337366
+      m_AnimationSpeed: 7.0818267
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 8, y: 6, z: 0}
@@ -1933,7 +1933,7 @@ Tilemap:
       - {fileID: 1572764865, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: 820307780, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: -249123763, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
-      m_AnimationSpeed: 5.026289
+      m_AnimationSpeed: 7.482771
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: 10, z: 0}
@@ -1951,7 +1951,7 @@ Tilemap:
       - {fileID: 1572764865, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: 820307780, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: -249123763, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
-      m_AnimationSpeed: 7.0451818
+      m_AnimationSpeed: 9.430392
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -5, y: 11, z: 0}
@@ -1969,7 +1969,7 @@ Tilemap:
       - {fileID: 1572764865, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: 820307780, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
       - {fileID: -249123763, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
-      m_AnimationSpeed: 8.123534
+      m_AnimationSpeed: 7.4326215
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
@@ -9513,14 +9513,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1837161166}
-  - component: {fileID: 1837161168}
+  - component: {fileID: 1837161167}
   m_Layer: 0
-  m_Name: Test Weapon
+  m_Name: Fireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1837161166
 Transform:
   m_ObjectHideFlags: 0
@@ -9536,7 +9536,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 667440520}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1837161168
+--- !u!114 &1837161167
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9548,7 +9548,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35490595bb7640f2826cd0172e2e5acb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weapon
-  m_weaponData: {fileID: 11400000, guid: fd5a96f95531942a1ae818472b8e9f63, type: 2}
+  m_weaponData: {fileID: 11400000, guid: 14240930c2ea74ae2a720e2411a523fe, type: 2}
   m_preallocateCount: 10
 --- !u!1001 &1849404763
 PrefabInstance:

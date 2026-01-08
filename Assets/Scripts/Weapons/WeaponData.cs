@@ -14,7 +14,7 @@ public class WeaponData : ScriptableObject
     
     [Header("General")]
     [SerializeField] private string m_weaponName;
-    [SerializeField] private string m_description;
+    [SerializeField, TextArea] private string m_description;
     [SerializeField] private Sprite m_icon;
 
     [Header("Targeting")]
@@ -25,6 +25,7 @@ public class WeaponData : ScriptableObject
     [SerializeField] private int m_damage = 10;
     [SerializeField] private float m_fireRate = 1f;
     [SerializeField] private float m_projectileSpeed = 10f;
+    [SerializeField] private float m_knockbackForce = 5f;
 
     [Header("Projectile")]
     [SerializeField] private GameObject m_projectilePrefab;
@@ -56,6 +57,7 @@ public class WeaponData : ScriptableObject
     public int Damage => m_damage;
     public float FireRate => m_fireRate;
     public float ProjectileSpeed => m_projectileSpeed;
+    public float KnockbackForce => m_knockbackForce;
     
     // Projectile
     public GameObject ProjectilePrefab => m_projectilePrefab;

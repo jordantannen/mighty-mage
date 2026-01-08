@@ -10,19 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 634d50dae52645a797f7f02e3bee7b79, type: 3}
-  m_Name: Autoshoot
+  m_Name: Spectral Swords
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  m_weaponName: 
-  m_description: 
-  m_icon: {fileID: 0}
-  m_targetingType: 0
+  m_weaponName: Spectral Swords
+  m_description: Summon three spectral swords. Swords will rotate around the player
+    dealing damage and knocking back enemies they make contact with.
+  m_icon: {fileID: 1633251539642763354, guid: 1e7b84d8caeaf4ca793fd6e67d002d5c, type: 3}
+  m_targetingType: 2
   m_maxRange: 5
-  m_damage: 10
+  m_damage: 1
   m_fireRate: 1
   m_projectileSpeed: 10
-  m_projectilePrefab: {fileID: 0}
-  m_orbitRadius: 2
-  m_orbitSpeed: 180
+  m_knockbackForce: 10
+  m_projectilePrefab: {fileID: 7045286316669730251, guid: d42f5f7e15bf94f3ab44211f746996fd, type: 3}
+  m_orbitRadius: 1
+  m_orbitSpeed: 230
   m_orbitProjectileCount: 3
   m_burstProjectileCount: 8
   m_bounceCount: 3

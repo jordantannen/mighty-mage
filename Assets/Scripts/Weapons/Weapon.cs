@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,9 +8,11 @@ public class Weapon : MonoBehaviour
     [SerializeField] private WeaponData m_weaponData;
     [SerializeField] private int m_preallocateCount = 10;
     
+    private WeaponBaseStats m_baseStats;
     private GameObjectPool m_projectilePool; 
     private float m_nextFireTime;
     private Rigidbody m_parentRigidbody;
+    private List<OrbitingProjectile> m_activeOrbitingProjectiles = new List<OrbitingProjectile>();
     
     public void Initialize(WeaponData data)
     {
@@ -32,7 +35,9 @@ public class Weapon : MonoBehaviour
 
     private void InitializeWeapon()
     {
-        switch (m_weaponData.Type)
+        m_baseStats = new WeaponBaseStats(m_weaponData);
+        
+        switch (m_baseStats.Type)
         {
             case WeaponData.TargetingType.NearestEnemy:
             case WeaponData.TargetingType.MouseCursor:
@@ -50,7 +55,7 @@ public class Weapon : MonoBehaviour
     private void CreatePool()
     {
         m_projectilePool = gameObject.AddComponent<GameObjectPool>();
-        m_projectilePool.Initialize(m_weaponData.ProjectilePrefab, transform);
+        m_projectilePool.Initialize(m_baseStats.ProjectilePrefab, transform);
         m_projectilePool.Preallocate(m_preallocateCount);
     }
     
@@ -58,17 +63,17 @@ public class Weapon : MonoBehaviour
     {
         if (Time.time >= m_nextFireTime)
         {
-            if (m_weaponData.Type == WeaponData.TargetingType.NearestEnemy)
+            if (m_baseStats.Type == WeaponData.TargetingType.NearestEnemy)
             {
                 Enemy target = FindNearestEnemy();
                 if (target != null)
                 {
                     Vector3 direction = (target.transform.position - transform.position).normalized;
                     Attack(direction);
-                    m_nextFireTime = Time.time + (1f / m_weaponData.FireRate); // 1f is 1 second. 
+                    m_nextFireTime = Time.time + (1f / m_baseStats.FireRate);
                 }
             } 
-            else if (m_weaponData.Type == WeaponData.TargetingType.MouseCursor)
+            else if (m_baseStats.Type == WeaponData.TargetingType.MouseCursor)
             {
                 // TODO: See how this playtests
                 if (Keyboard.current.spaceKey.isPressed) 
@@ -77,23 +82,23 @@ public class Weapon : MonoBehaviour
                     if (direction != Vector3.zero)
                     {
                         Attack(direction);
-                        m_nextFireTime = Time.time + (1f / m_weaponData.FireRate);
+                        m_nextFireTime = Time.time + (1f / m_baseStats.FireRate);
                     }
                 }
             }
-            else if (m_weaponData.Type == WeaponData.TargetingType.RadialBurst)
+            else if (m_baseStats.Type == WeaponData.TargetingType.RadialBurst)
             {
                 FireRadialBurst();
-                m_nextFireTime = Time.time + (1f / m_weaponData.FireRate);
+                m_nextFireTime = Time.time + (1f / m_baseStats.FireRate);
             }
-            else if (m_weaponData.Type == WeaponData.TargetingType.Bouncing)
+            else if (m_baseStats.Type == WeaponData.TargetingType.Bouncing)
             {
                 Enemy target = FindNearestEnemy();
                 if (target != null)
                 {
                     Vector3 direction = (target.transform.position - transform.position).normalized;
                     AttackBouncing(direction);
-                    m_nextFireTime = Time.time + (1f / m_weaponData.FireRate);
+                    m_nextFireTime = Time.time + (1f / m_baseStats.FireRate);
                 }
             }
         }
@@ -117,7 +122,7 @@ public class Weapon : MonoBehaviour
             inheritedVelocity = m_parentRigidbody.linearVelocity;
         }
 
-        projectile.Fire(m_weaponData.Damage, m_weaponData.ProjectileSpeed, transform.position, direction, m_projectilePool, inheritedVelocity);
+        projectile.Fire(m_baseStats.Damage, m_baseStats.ProjectileSpeed, m_baseStats.KnockbackForce, transform.position, direction, m_projectilePool, inheritedVelocity);
     }
 
     private void AttackBouncing(Vector3 direction)
@@ -132,13 +137,14 @@ public class Weapon : MonoBehaviour
         }
         
         projectile.Fire(
-            m_weaponData.Damage, 
-            m_weaponData.ProjectileSpeed, 
+            m_baseStats.Damage, 
+            m_baseStats.ProjectileSpeed,
+            m_baseStats.KnockbackForce,
             transform.position, 
             direction, 
             m_projectilePool, 
-            m_weaponData.BounceCount, 
-            m_weaponData.BounceRange
+            m_baseStats.BounceCount, 
+            m_baseStats.BounceRange
         );
     }
 
@@ -146,7 +152,7 @@ public class Weapon : MonoBehaviour
     {
         Enemy[] allEnemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
         Enemy closestEnemy = null;
-        float closestDistance = m_weaponData.MaxRange;
+        float closestDistance = m_baseStats.MaxRange;
 
         foreach (Enemy enemy in allEnemies)
         {
@@ -185,7 +191,7 @@ public class Weapon : MonoBehaviour
     
     private void SpawnOrbitingProjectiles()
     {
-        int count = m_weaponData.OrbitProjectileCount;
+        int count = m_baseStats.OrbitProjectileCount;
         float angleStep = 360f / count;
         
         for (int i = 0; i < count; i++)
@@ -202,18 +208,21 @@ public class Weapon : MonoBehaviour
             
             float startAngle = i * angleStep;
             orbitingProjectile.Initialize(
-                m_weaponData.Damage,
-                m_weaponData.OrbitSpeed,
-                m_weaponData.OrbitRadius,
+                m_baseStats.Damage,
+                m_baseStats.KnockbackForce,
+                m_baseStats.OrbitSpeed,
+                m_baseStats.OrbitRadius,
                 transform.parent, // Orbit around the player 
                 startAngle
             );
+            
+            m_activeOrbitingProjectiles.Add(orbitingProjectile);
         }
     }
 
     private void FireRadialBurst()
     {
-        int count = m_weaponData.BurstProjectileCount;
+        int count = m_baseStats.BurstProjectileCount;
         float angleStep = 360f / count;
         
         for (int i = 0; i < count; i++)
@@ -222,5 +231,51 @@ public class Weapon : MonoBehaviour
             Vector3 direction = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
             Attack(direction, inheritVelocity: true);
         }
+    }
+
+    private void RespawnOrbitingProjectiles()
+    {
+        // Return all active orbiting projectiles to pool
+        foreach (var projectile in m_activeOrbitingProjectiles)
+        {
+            if (projectile != null && projectile.gameObject.activeInHierarchy)
+            {
+                m_projectilePool.Return(projectile.gameObject);
+            }
+        }
+        m_activeOrbitingProjectiles.Clear();
+        
+        // Spawn fresh with updated stats
+        SpawnOrbitingProjectiles();
+    }
+
+    /// <summary>
+    /// Applies an upgrade to this weapon's stats.
+    /// Returns true if the upgrade was successfully applied.
+    /// </summary>
+    public bool ApplyUpgrade(UpgradeData upgrade)
+    {
+        StatType? modifiedStat = m_baseStats.ApplyUpgrade(upgrade);
+        
+        if (modifiedStat == null)
+        {
+            return false;
+        }
+        
+        // For orbit weapons, respawn projectiles when orbit-related stats change
+        if (m_baseStats.Type == WeaponData.TargetingType.Orbit)
+        {
+            bool isOrbitStat = modifiedStat == StatType.OrbitProjectileCount ||
+                               modifiedStat == StatType.OrbitRadius ||
+                               modifiedStat == StatType.OrbitSpeed ||
+                               modifiedStat == StatType.Damage;
+            
+            if (isOrbitStat)
+            {
+                RespawnOrbitingProjectiles();
+            }
+        }
+        
+        return true;
     }
 }

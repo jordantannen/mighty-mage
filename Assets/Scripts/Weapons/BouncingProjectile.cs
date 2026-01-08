@@ -9,27 +9,31 @@ public class BouncingProjectile : MonoBehaviour
     
     private int m_damage;
     private float m_speed;
+    private float m_knockbackForce;
     private int m_bouncesRemaining;
     private float m_bounceRange;
     private GameObjectPool m_pool;
     private Rigidbody m_rigidbody;
     private Enemy m_lastHitEnemy;
+    private Vector3 m_currentDirection;
 
-    public void Fire(int damage, float speed, Vector3 launchPosition, Vector3 direction, GameObjectPool pool, int bounceCount, float bounceRange)
+    public void Fire(int damage, float speed, float knockbackForce, Vector3 launchPosition, Vector3 direction, GameObjectPool pool, int bounceCount, float bounceRange)
     {
         m_damage = damage;
         m_speed = speed;
+        m_knockbackForce = knockbackForce;
         m_bouncesRemaining = bounceCount;
         m_bounceRange = bounceRange;
         m_pool = pool;
         m_lastHitEnemy = null;
+        m_currentDirection = direction.normalized;
         
         transform.position = launchPosition;
         
         StopAllCoroutines();
         StartCoroutine(ReturnAfterLifetime());
 
-        m_rigidbody.linearVelocity = direction.normalized * m_speed;
+        m_rigidbody.linearVelocity = m_currentDirection * m_speed;
     }
 
     private void Awake()
@@ -45,6 +49,13 @@ public class BouncingProjectile : MonoBehaviour
         {
             // Deal damage
             enemy.GetComponent<HealthHandler>().TakeDamage(m_damage);
+            
+            // Only apply knockback if enemy is still active (not killed by damage)
+            if (enemy.gameObject.activeInHierarchy)
+            {
+                // Apply knockback in the direction the projectile was traveling
+                enemy.GetComponent<KnockbackHandler>().ApplyKnockback(m_currentDirection, m_knockbackForce);
+            }
             
             // Store as last hit enemy so we don't immediately bounce back
             m_lastHitEnemy = enemy;
@@ -71,8 +82,8 @@ public class BouncingProjectile : MonoBehaviour
         }
         
         // Redirect toward next target
-        Vector3 direction = (nextTarget.transform.position - transform.position).normalized;
-        m_rigidbody.linearVelocity = direction * m_speed;
+        m_currentDirection = (nextTarget.transform.position - transform.position).normalized;
+        m_rigidbody.linearVelocity = m_currentDirection * m_speed;
         
         m_bouncesRemaining--;
     }
