@@ -144,6 +144,9 @@ public class Weapon : MonoBehaviour
             return;
         }
         
+        Enemy target = FindNearestEnemy();
+        PlayDamageSound();
+        
         projectile.Fire(
             m_baseStats.Damage, 
             m_baseStats.ProjectileSpeed,
@@ -154,6 +157,11 @@ public class Weapon : MonoBehaviour
             m_baseStats.BounceCount, 
             m_baseStats.BounceRange
         );
+        
+        if (target != null)
+        {
+            projectile.SetTarget(target);
+        }
     }
 
     private Enemy FindNearestEnemy()

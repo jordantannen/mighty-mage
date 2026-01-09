@@ -15,6 +15,7 @@ public class BouncingProjectile : MonoBehaviour
     private GameObjectPool m_pool;
     private Rigidbody m_rigidbody;
     private Enemy m_lastHitEnemy;
+    private Enemy m_currentTarget;
     private Vector3 m_currentDirection;
 
     public void Fire(int damage, float speed, float knockbackForce, Vector3 launchPosition, Vector3 direction, GameObjectPool pool, int bounceCount, float bounceRange)
@@ -26,6 +27,7 @@ public class BouncingProjectile : MonoBehaviour
         m_bounceRange = bounceRange;
         m_pool = pool;
         m_lastHitEnemy = null;
+        m_currentTarget = null;
         m_currentDirection = direction.normalized;
         
         transform.position = launchPosition;
@@ -39,6 +41,21 @@ public class BouncingProjectile : MonoBehaviour
     private void Awake()
     {
         m_rigidbody = GetComponent<Rigidbody>();
+    }
+
+    public void SetTarget(Enemy target)
+    {
+        m_currentTarget = target;
+    }
+
+    private void Update()
+    {
+        // Continuously track current target (heat-seeking behavior)
+        if (m_currentTarget != null && m_currentTarget.gameObject.activeInHierarchy)
+        {
+            m_currentDirection = (m_currentTarget.transform.position - transform.position).normalized;
+            m_rigidbody.linearVelocity = m_currentDirection * m_speed;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -59,6 +76,7 @@ public class BouncingProjectile : MonoBehaviour
             
             // Store as last hit enemy so we don't immediately bounce back
             m_lastHitEnemy = enemy;
+            m_currentTarget = null;
             
             // Try to bounce to next target
             TryBounce();
@@ -81,10 +99,8 @@ public class BouncingProjectile : MonoBehaviour
             return;
         }
         
-        // Redirect toward next target
-        m_currentDirection = (nextTarget.transform.position - transform.position).normalized;
-        m_rigidbody.linearVelocity = m_currentDirection * m_speed;
-        
+        // Set the next target for heat-seeking behavior
+        m_currentTarget = nextTarget;
         m_bouncesRemaining--;
     }
 
@@ -123,6 +139,7 @@ public class BouncingProjectile : MonoBehaviour
     {
         m_rigidbody.linearVelocity = Vector3.zero;
         m_lastHitEnemy = null;
+        m_currentTarget = null;
         m_pool.Return(gameObject);
     }
     

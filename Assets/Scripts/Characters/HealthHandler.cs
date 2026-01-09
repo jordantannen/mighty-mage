@@ -65,11 +65,11 @@ public class HealthHandler : MonoBehaviour
 
         if (m_audioSource && m_damageSound)
         {
-            m_audioSource.pitch = UnityEngine.Random.Range(m_pitchLowerBound, m_pitchUpperBound); 
+            m_audioSource.pitch = UnityEngine.Random.Range(m_pitchLowerBound, m_pitchUpperBound);
             m_audioSource.PlayOneShot(m_damageSound);
         }
-
-        if (m_visualRenderer&& m_damageFlashSprite)
+        
+        if (m_visualRenderer && m_damageFlashSprite)
         {
             StartCoroutine(DamageFlash());
         }

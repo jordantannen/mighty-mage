@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -93,6 +94,18 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        // Stop movement immediately
+        DisableNavAgent();
+        m_rb.linearVelocity = Vector3.zero;
+        
+        // Small delay to let damage sound start playing before enemy is disabled
+        StartCoroutine(DelayedDeath());
+    }
+
+    // This somewhat solves the weird sound problem, but TODO review this
+    private IEnumerator DelayedDeath()
+    {
+        yield return null;
         OnDeath?.Invoke();
     }
 
