@@ -8,6 +8,12 @@ public class Weapon : MonoBehaviour
     [SerializeField] private WeaponData m_weaponData;
     [SerializeField] private int m_preallocateCount = 10;
     
+    [Header("Sound")]
+    [SerializeField] private AudioClip m_fireSound;
+    [SerializeField] private AudioSource m_audioSource;
+    [SerializeField] private float m_pitchLowerBound = 0.9f;
+    [SerializeField] private float m_pitchUpperBound = 1.1f;
+    
     private WeaponBaseStats m_baseStats;
     private GameObjectPool m_projectilePool; 
     private float m_nextFireTime;
@@ -76,7 +82,7 @@ public class Weapon : MonoBehaviour
             else if (m_baseStats.Type == WeaponData.TargetingType.MouseCursor)
             {
                 // TODO: See how this playtests
-                if (Keyboard.current.spaceKey.isPressed) 
+                if (Keyboard.current.spaceKey.wasPressedThisFrame) 
                 {
                     Vector3 direction = FindCursorDirection();
                     if (direction != Vector3.zero)
@@ -117,9 +123,15 @@ public class Weapon : MonoBehaviour
         
         // Only inherit velocity for radial burst to keep projectiles centered on moving player
         Vector3 inheritedVelocity = Vector3.zero;
-        if (inheritVelocity && m_parentRigidbody != null)
+        if (inheritVelocity&& m_parentRigidbody)
         {
             inheritedVelocity = m_parentRigidbody.linearVelocity;
+        }
+        
+        if (m_fireSound&& m_audioSource)
+        {
+            m_audioSource.pitch = Random.Range(m_pitchLowerBound, m_pitchUpperBound);
+            m_audioSource.PlayOneShot(m_fireSound);
         }
 
         projectile.Fire(m_baseStats.Damage, m_baseStats.ProjectileSpeed, m_baseStats.KnockbackForce, transform.position, direction, m_projectilePool, inheritedVelocity);

@@ -6,7 +6,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private float m_maxLifetime = 5f; // In seconds
-    [SerializeField] private Transform m_visualTransform; 
+    [SerializeField] private Transform m_visualTransform;
     
     private int m_damage;
     private float m_speed;

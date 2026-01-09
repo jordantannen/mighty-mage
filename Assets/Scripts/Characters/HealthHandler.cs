@@ -22,6 +22,12 @@ public class HealthHandler : MonoBehaviour
     [SerializeField] private Sprite m_damageFlashSprite;
     [SerializeField] private float m_damageFlashDuration = 0.1f;
     private Sprite m_originalSprite;
+
+    [Header("Sound")]
+    [SerializeField] private AudioSource m_audioSource;
+    [SerializeField] private AudioClip m_damageSound;
+    [SerializeField] private float m_pitchLowerBound = 0.9f;
+    [SerializeField] private float m_pitchUpperBound = 1.1f;
     
     private void Awake()
     {
@@ -57,7 +63,13 @@ public class HealthHandler : MonoBehaviour
         
         m_currentHealth -= damage;
 
-        if (m_visualRenderer != null && m_damageFlashSprite != null)
+        if (m_audioSource && m_damageSound)
+        {
+            m_audioSource.pitch = UnityEngine.Random.Range(m_pitchLowerBound, m_pitchUpperBound); 
+            m_audioSource.PlayOneShot(m_damageSound);
+        }
+
+        if (m_visualRenderer&& m_damageFlashSprite)
         {
             StartCoroutine(DamageFlash());
         }
