@@ -127,12 +127,8 @@ public class Weapon : MonoBehaviour
         {
             inheritedVelocity = m_parentRigidbody.linearVelocity;
         }
-        
-        if (m_fireSound&& m_audioSource)
-        {
-            m_audioSource.pitch = Random.Range(m_pitchLowerBound, m_pitchUpperBound);
-            m_audioSource.PlayOneShot(m_fireSound);
-        }
+
+        PlayDamageSound();
 
         projectile.Fire(m_baseStats.Damage, m_baseStats.ProjectileSpeed, m_baseStats.KnockbackForce, transform.position, direction, m_projectilePool, inheritedVelocity);
     }
@@ -218,6 +214,8 @@ public class Weapon : MonoBehaviour
                 continue;
             }
             
+            PlayDamageSound();
+            
             float startAngle = i * angleStep;
             orbitingProjectile.Initialize(
                 m_baseStats.Damage,
@@ -236,6 +234,8 @@ public class Weapon : MonoBehaviour
     {
         int count = m_baseStats.BurstProjectileCount;
         float angleStep = 360f / count;
+        
+        PlayDamageSound();
         
         for (int i = 0; i < count; i++)
         {
@@ -289,5 +289,14 @@ public class Weapon : MonoBehaviour
         }
         
         return true;
+    }
+
+    private void PlayDamageSound()
+    {
+        if (m_fireSound&& m_audioSource)
+        {
+            m_audioSource.pitch = Random.Range(m_pitchLowerBound, m_pitchUpperBound);
+            m_audioSource.PlayOneShot(m_fireSound);
+        }
     }
 }

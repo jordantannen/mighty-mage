@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] private float m_maxLifetime = 5f; // In seconds
     [SerializeField] private Transform m_visualTransform;
+    [SerializeField] private bool m_canGoThroughEnemies = false;
     
     private int m_damage;
     private float m_speed;
@@ -59,8 +60,8 @@ public class Projectile : MonoBehaviour
                 Vector3 knockbackDirection = m_direction.normalized;
                 enemy.GetComponent<KnockbackHandler>().ApplyKnockback(knockbackDirection, m_knockbackForce);
             }
-            
-            ReturnToPool();
+
+            if (!m_canGoThroughEnemies) ReturnToPool();
         }
     }
     
