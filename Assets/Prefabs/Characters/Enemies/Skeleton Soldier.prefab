@@ -87,10 +87,10 @@ MonoBehaviour:
   m_visualRenderer: {fileID: 8457818452583587403}
   m_damageFlashSprite: {fileID: -7279952713937485757, guid: 94e7f97497fe04905b38ea063fbb58b6, type: 3}
   m_damageFlashDuration: 0.2
-  m_audioSource: {fileID: -8229513643752984617}
-  m_damageSound: {fileID: 8300000, guid: a1211eec2dde3447cace6eb2acfe6767, type: 3}
-  m_pitchLowerBound: 0.9
-  m_pitchUpperBound: 1.1
+  m_damageSound: {fileID: 8300000, guid: e9df4f3d4710846238b3afee01f3be23, type: 3}
+  m_volume: 0.3
+  m_pitchLowerBound: 2
+  m_pitchUpperBound: 2.2
 --- !u!114 &5612537644139829341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,13 +184,13 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5115058406910482019}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_PlayOnAwake: 0
+  m_Volume: 0.295
   m_Pitch: 1
   Loop: 0
   Mute: 0

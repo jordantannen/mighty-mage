@@ -20,7 +20,7 @@ MonoBehaviour:
   m_maxRange: 8
   m_damage: 10
   m_fireRate: 0.25
-  m_projectileSpeed: 7
+  m_projectileSpeed: 5
   m_knockbackForce: 0.2
   m_projectilePrefab: {fileID: 601207914079585794, guid: 156670d51f3b746ea84054efa0c6a499, type: 3}
   m_orbitRadius: 2
