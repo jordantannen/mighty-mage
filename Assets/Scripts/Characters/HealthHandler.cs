@@ -24,8 +24,8 @@ public class HealthHandler : MonoBehaviour
     private Sprite m_originalSprite;
 
     [Header("Sound")]
-    [SerializeField] private AudioSource m_audioSource;
     [SerializeField] private AudioClip m_damageSound;
+    [SerializeField] private float m_volume = 1f;
     [SerializeField] private float m_pitchLowerBound = 0.9f;
     [SerializeField] private float m_pitchUpperBound = 1.1f;
     
@@ -63,10 +63,10 @@ public class HealthHandler : MonoBehaviour
         
         m_currentHealth -= damage;
 
-        if (m_audioSource && m_damageSound)
+        if (m_damageSound && SoundPool.Instance != null)
         {
-            m_audioSource.pitch = UnityEngine.Random.Range(m_pitchLowerBound, m_pitchUpperBound);
-            m_audioSource.PlayOneShot(m_damageSound);
+            float pitch = UnityEngine.Random.Range(m_pitchLowerBound, m_pitchUpperBound);
+            SoundPool.Instance.PlaySound(m_damageSound, transform.position, m_volume, pitch);
         }
         
         if (m_visualRenderer && m_damageFlashSprite)
