@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68772f4562384e1f8481b15d7531dc79, type: 3}
+  m_Name: Fireball Speed
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
+  m_upgradeName: Faster Fireballs
+  m_description: Fireballs fly faster.
+  m_icon: {fileID: -1927795063, guid: 0c339b47225414a9cbdf6c01478d58e1, type: 3}
+  m_upgradeType: 1
+  m_statType: 2
+  m_value: 3
+  m_applicableWeaponTypes: 
