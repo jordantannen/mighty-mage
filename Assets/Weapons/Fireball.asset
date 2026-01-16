@@ -20,7 +20,7 @@ MonoBehaviour:
   m_damage: 5
   m_fireRate: 5
   m_projectileSpeed: 5
-  m_knockbackForce: 0.5
+  m_knockbackForce: 0.7
   m_projectilePrefab: {fileID: 2045019846639956861, guid: eefe716bdef8a4f0ca3db38effd1b95c, type: 3}
   m_orbitRadius: 2
   m_orbitSpeed: 180

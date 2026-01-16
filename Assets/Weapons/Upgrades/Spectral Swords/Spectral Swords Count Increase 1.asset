@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68772f4562384e1f8481b15d7531dc79, type: 3}
   m_Name: Spectral Swords Count Increase 1
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
-  m_upgradeName: More Swords!
+  m_upgradeName: Another Sword
   m_description: Gain additional spectral sword
   m_icon: {fileID: 1633251539642763354, guid: 1e7b84d8caeaf4ca793fd6e67d002d5c, type: 3}
   m_upgradeType: 1

@@ -86,7 +86,7 @@ MonoBehaviour:
   m_spriteAnimator: {fileID: 163373331094615677}
   m_visualRenderer: {fileID: 8457818452583587403}
   m_damageFlashSprite: {fileID: -7279952713937485757, guid: 94e7f97497fe04905b38ea063fbb58b6, type: 3}
-  m_damageFlashDuration: 0.2
+  m_damageFlashDuration: 0.3
   m_damageSound: {fileID: 8300000, guid: 768338528cbaa4dd9ae9afc6724e7711, type: 3}
   m_volume: 0.3
   m_pitchLowerBound: 2
