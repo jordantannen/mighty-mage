@@ -13,6 +13,8 @@ public class UpgradeSelection : MonoBehaviour
     private UIDocument m_uiDocument;
     private bool isVisible = false;
     
+    public event Action<UpgradeData> OnUpgradeChosen;
+    
     private void Start()
     {
         m_uiDocument = GetComponent<UIDocument>();
@@ -71,7 +73,7 @@ public class UpgradeSelection : MonoBehaviour
     private void OnUpgradeSelected(UpgradeData upgrade)
     {
         Debug.Log($"Selected upgrade: {upgrade.UpgradeName}");
-        // TODO: Apply the upgrade via WeaponManager
+        OnUpgradeChosen?.Invoke(upgrade);
         Hide();
     }
     

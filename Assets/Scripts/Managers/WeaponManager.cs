@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 // NOTE TO SELF: Upgrades are defined on type, they probably should have a unique ID or name to bind upgrades
 // to specific weapons. Doesn't matter given the scope, but will need a change if extending the game.
@@ -20,6 +22,22 @@ public class WeaponManager : MonoBehaviour
     private void Start()
     {
         m_availableWeapons.AddRange(weaponPrefabs);
+    }
+
+    private void OnEnable()
+    {
+        if (m_upgradeSelection != null)
+        {
+            m_upgradeSelection.OnUpgradeChosen += ApplyUpgrade;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (m_upgradeSelection != null)
+        {
+            m_upgradeSelection.OnUpgradeChosen -= ApplyUpgrade;
+        }
     }
     
     private void Update()
@@ -114,4 +132,17 @@ public class WeaponManager : MonoBehaviour
         return result;
     }
     
+    public void ApplyUpgrade(UpgradeData upgrade)
+    {
+        Weapon targetWeapon = m_equippedWeapons.FirstOrDefault(weapon => weapon && upgrade.CanApplyTo(weapon.WeaponType));
+        
+        if (targetWeapon && targetWeapon.ApplyUpgrade(upgrade))
+        {
+            m_appliedUpgrades.Add(upgrade.UpgradeName);
+        }
+        else
+        {
+            Debug.LogWarning($"Failed to apply upgrade '{upgrade.UpgradeName}' - no matching weapon found");
+        }
+    }
 }
