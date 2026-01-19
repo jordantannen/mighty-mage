@@ -18,4 +18,4 @@ MonoBehaviour:
   m_upgradeType: 1
   m_statType: 2
   m_value: 3
-  m_applicableWeaponTypes: 
+  m_applicableWeaponTypes: 01000000

@@ -16,6 +16,6 @@ MonoBehaviour:
   m_description: Spectral sword spin faster
   m_icon: {fileID: 1633251539642763354, guid: 1e7b84d8caeaf4ca793fd6e67d002d5c, type: 3}
   m_upgradeType: 0
-  m_statType: 5
-  m_value: 15
+  m_statType: 6
+  m_value: 5
   m_applicableWeaponTypes: 02000000
