@@ -49,11 +49,8 @@ public class KnockbackHandler : MonoBehaviour
     public void ApplyKnockback(Vector3 direction, float force = -1f)
     {
         direction.y = 0; // Keep knockback horizontal
-        
-        // Use default force if not specified
         float knockbackForce = force < 0 ? m_knockbackForce : force;
-        
-        // If already knocked back, stop the previous coroutine
+
         if (m_knockbackCoroutine != null)
         {
             StopCoroutine(m_knockbackCoroutine);
@@ -67,17 +64,15 @@ public class KnockbackHandler : MonoBehaviour
         m_isKnockedBack = true;
         OnKnockbackStart?.Invoke();
         
-        // Reset velocity to ensure consistent knockback
         m_rb.linearVelocity = Vector3.zero;
         m_rb.AddForce(direction * force, ForceMode.Impulse);
         
         yield return new WaitForSeconds(m_knockbackDuration);
         
-        // Stop sliding
         m_rb.linearVelocity = Vector3.zero;
         m_isKnockedBack = false;
         m_knockbackCoroutine = null;
-        Debug.Log($"Knockbacked {gameObject.name}");
+        // Debug.Log($"Knockbacked {gameObject.name}");
         OnKnockbackEnd?.Invoke();   
     }
 }
