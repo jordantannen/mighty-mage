@@ -71,8 +71,15 @@ public class WeaponManager : MonoBehaviour
         
         UpgradeData upgrade = availableUpgrades[Random.Range(0, availableUpgrades.Count)];
         Weapon targetWeapon = m_equippedWeapons.FirstOrDefault(weapon => weapon && upgrade.CanApplyTo(weapon.WeaponType));
-        m_appliedUpgrades.Add(upgrade.UpgradeName);
-        Debug.Log($"Applied '{upgrade.UpgradeName}' to {targetWeapon.WeaponType} weapon");
         
+        if (targetWeapon && targetWeapon.ApplyUpgrade(upgrade))
+        {
+            m_appliedUpgrades.Add(upgrade.UpgradeName);
+            Debug.Log($"Applied '{upgrade.UpgradeName}' to {targetWeapon.WeaponType} weapon");
+        }
+        else
+        {
+            Debug.LogWarning($"Failed to apply upgrade '{upgrade.UpgradeName}' - no matching weapon found");
+        }
     }
 }
