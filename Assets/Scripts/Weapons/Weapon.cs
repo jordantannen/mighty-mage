@@ -20,6 +20,9 @@ public class Weapon : MonoBehaviour
     private Rigidbody m_parentRigidbody;
     private List<OrbitingProjectile> m_activeOrbitingProjectiles = new List<OrbitingProjectile>();
     
+    // Public accessors
+    public WeaponData.TargetingType WeaponType => m_baseStats?.Type ?? WeaponData.TargetingType.NearestEnemy;
+    
     public void Initialize(WeaponData data)
     {
         m_weaponData = data;
