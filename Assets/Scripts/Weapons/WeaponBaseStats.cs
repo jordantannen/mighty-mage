@@ -30,11 +30,13 @@ public class WeaponBaseStats
 
         if (upgrade.Type == UpgradeType.Percentage)
         {
-            m_percentMods[upgrade.Stat] += upgrade.Value;
+            m_percentMods.TryGetValue(upgrade.Stat, out float current);
+            m_percentMods[upgrade.Stat] = current + upgrade.Value;
         }
         else
         {
-            m_flatMods[upgrade.Stat] += upgrade.Value;
+            m_flatMods.TryGetValue(upgrade.Stat, out float current);
+            m_flatMods[upgrade.Stat] = current + upgrade.Value;
         }
 
         return upgrade.Stat;
