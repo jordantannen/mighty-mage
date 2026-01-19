@@ -22,6 +22,9 @@ public class Weapon : MonoBehaviour
     
     // Public accessors
     public WeaponData.TargetingType WeaponType => m_baseStats?.Type ?? WeaponData.TargetingType.NearestEnemy;
+    public Sprite Icon => m_weaponData?.Icon;
+    public string WeaponName => m_weaponData?.WeaponName ?? "Unknown Weapon";
+    public string Description => m_weaponData?.Description ?? "";
     
     public void Initialize(WeaponData data)
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 // NOTE TO SELF: Upgrades are defined on type, they probably should have a unique ID or name to bind upgrades
@@ -13,98 +14,64 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private List<Weapon> weaponPrefabs = new List<Weapon>();
     [SerializeField] private List<UpgradeData> m_upgradeData = new List<UpgradeData>();
     [SerializeField] private GameObject player;
-    [SerializeField] private UpgradeSelection m_upgradeSelection;
+    [FormerlySerializedAs("m_upgradeSelection")] [SerializeField] private UpgradeSelectionUI m_upgradeSelectionUI;
     
-    private List<Weapon> m_availableWeapons = new List<Weapon>();
-    private List<Weapon> m_equippedWeapons = new List<Weapon>();
+    private HashSet<Weapon> m_availableWeapons = new HashSet<Weapon>();
+    private HashSet<Weapon> m_equippedWeapons = new HashSet<Weapon>();
     private HashSet<string> m_appliedUpgrades = new HashSet<string>();
     
-    private void Start()
+    private void Awake()
     {
-        m_availableWeapons.AddRange(weaponPrefabs);
+        foreach (var weapon in weaponPrefabs)
+        {
+            m_availableWeapons.Add(weapon);
+        }
     }
 
     private void OnEnable()
     {
-        if (m_upgradeSelection != null)
+        if (m_upgradeSelectionUI != null)
         {
-            m_upgradeSelection.OnUpgradeChosen += ApplyUpgrade;
+            m_upgradeSelectionUI.OnUpgradeChosen += ApplyUpgrade;
+            m_upgradeSelectionUI.OnWeaponChosen += EquipWeapon;
         }
     }
 
     private void OnDestroy()
     {
-        if (m_upgradeSelection != null)
+        if (m_upgradeSelectionUI != null)
         {
-            m_upgradeSelection.OnUpgradeChosen -= ApplyUpgrade;
+            m_upgradeSelectionUI.OnUpgradeChosen -= ApplyUpgrade;
+            m_upgradeSelectionUI.OnWeaponChosen -= EquipWeapon;
         }
     }
     
+    // FOR DEBUGGING!!! REMEMBER TO REMOVE!
     private void Update()
     {
-        if (Keyboard.current.bKey.wasPressedThisFrame) 
-        {
-            EquipRandomWeapon();
-        }
-
         if (Keyboard.current.vKey.wasPressedThisFrame)
         {
-            ApplyRandomUpgrade();
+            m_upgradeSelectionUI.DisplayWeapons(m_availableWeapons);
         }
 
         if (Keyboard.current.gKey.wasPressedThisFrame)
         {
-            m_upgradeSelection.DisplayUpgrades(CreateUpgradeList(3));
+            m_upgradeSelectionUI.DisplayUpgrades(CreateUpgradeList(3));
         }
     }
     
-    private void EquipRandomWeapon()
+    public void EquipWeapon(Weapon weaponPrefab)
     {
-        if (m_availableWeapons.Count == 0)
+        if (!m_availableWeapons.Contains(weaponPrefab))
         {
-            Debug.Log("Player already has all weapons equipped!");
+            Debug.LogWarning($"Weapon '{weaponPrefab.WeaponName}' is not available to equip.");
             return;
         }
         
-        int randomIndex = Random.Range(0, m_availableWeapons.Count);
-        Weapon weaponPrefab = m_availableWeapons[randomIndex];
-        m_availableWeapons.RemoveAt(randomIndex);
+        m_availableWeapons.Remove(weaponPrefab);
         
         GameObject weaponInstance = Instantiate(weaponPrefab.gameObject, player.transform);
         m_equippedWeapons.Add(weaponInstance.GetComponent<Weapon>());
-    }
-    
-    private void ApplyRandomUpgrade()
-    {
-        if (m_equippedWeapons.Count == 0)
-        {
-            Debug.Log("No weapons equipped to upgrade.");
-            return;
-        }
-        
-        List<UpgradeData> availableUpgrades = m_upgradeData
-            .Where(upgrade => !m_appliedUpgrades.Contains(upgrade.UpgradeName))
-            .Where(upgrade => m_equippedWeapons.Any(weapon => upgrade.CanApplyTo(weapon.WeaponType)))
-            .ToList();
-        
-        if (availableUpgrades.Count == 0)
-        {
-            Debug.Log("All available upgrades have been applied!");
-            return;
-        }
-        
-        UpgradeData upgrade = availableUpgrades[Random.Range(0, availableUpgrades.Count)];
-        Weapon targetWeapon = m_equippedWeapons.FirstOrDefault(weapon => weapon && upgrade.CanApplyTo(weapon.WeaponType));
-        
-        if (targetWeapon && targetWeapon.ApplyUpgrade(upgrade))
-        {
-            m_appliedUpgrades.Add(upgrade.UpgradeName);
-            Debug.Log($"Applied '{upgrade.UpgradeName}' to {targetWeapon.WeaponType} weapon");
-        }
-        else
-        {
-            Debug.LogWarning($"Failed to apply upgrade '{upgrade.UpgradeName}' - no matching weapon found");
-        }
     }
     
     public List<UpgradeData> CreateUpgradeList(int listSize)
@@ -144,5 +111,10 @@ public class WeaponManager : MonoBehaviour
         {
             Debug.LogWarning($"Failed to apply upgrade '{upgrade.UpgradeName}' - no matching weapon found");
         }
+    }
+
+    public HashSet<Weapon> GetAvailableWeapons()
+    {
+        return m_availableWeapons;
     }
 }
