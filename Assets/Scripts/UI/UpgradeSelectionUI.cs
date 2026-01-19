@@ -77,12 +77,10 @@ public class UpgradeSelectionUI : MonoBehaviour
             Button button = new Button();
             button.AddToClassList("button");
             
-            // Add weapon name at the top
             Label nameLabel = new Label(weapon.WeaponName);
             nameLabel.AddToClassList("item-name");
             button.Add(nameLabel);
             
-            // Add icon in the middle
             if (weapon.Icon != null)
             {
                 VisualElement icon = new VisualElement();
@@ -91,7 +89,6 @@ public class UpgradeSelectionUI : MonoBehaviour
                 button.Add(icon);
             }
             
-            // Add description at the bottom
             Label descLabel = new Label(weapon.Description);
             descLabel.AddToClassList("item-description");
             button.Add(descLabel);
