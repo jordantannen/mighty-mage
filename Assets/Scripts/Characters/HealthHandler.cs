@@ -28,6 +28,9 @@ public class HealthHandler : MonoBehaviour
     [SerializeField] private float m_volume = 1f;
     [SerializeField] private float m_pitchLowerBound = 0.9f;
     [SerializeField] private float m_pitchUpperBound = 1.1f;
+
+    [Header("UI")]
+    [SerializeField] private HealthBarUI m_healthBarUI;
     
     private void Awake()
     {
@@ -38,6 +41,7 @@ public class HealthHandler : MonoBehaviour
     public void Initialize()
     {
         m_currentHealth = m_maxHealth;
+        m_healthBarUI?.SetMaxHealth(m_maxHealth);
         m_isInvincible = false;
         
         // Ensure that if something dies mid-sprite flash, it'll reset
@@ -62,6 +66,7 @@ public class HealthHandler : MonoBehaviour
         if (m_isInvincible) return false;
         
         m_currentHealth -= damage;
+        m_healthBarUI?.SetHealth(m_currentHealth);
 
         if (m_damageSound && SoundPool.Instance != null)
         {
