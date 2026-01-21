@@ -23,8 +23,8 @@ MonoBehaviour:
   m_projectileSpeed: 10
   m_knockbackForce: 7
   m_projectilePrefab: {fileID: 7045286316669730251, guid: d42f5f7e15bf94f3ab44211f746996fd, type: 3}
-  m_orbitRadius: 1
-  m_orbitSpeed: 230
+  m_orbitRadius: 1.8
+  m_orbitSpeed: 150
   m_orbitProjectileCount: 3
   m_burstProjectileCount: 8
   m_bounceCount: 3

@@ -22,12 +22,12 @@ public class UpgradeSelectionUI : MonoBehaviour
         Hide();
     }
     
-    public void Show()
+    private void Show()
     {
         m_uiDocument.rootVisualElement.style.display = DisplayStyle.Flex;
     }
     
-    public void Hide()
+    private void Hide()
     {
         m_uiDocument.rootVisualElement.style.display = DisplayStyle.None;
     }

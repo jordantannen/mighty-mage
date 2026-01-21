@@ -34,6 +34,8 @@
     -unity-font-style: bold;
     -unity-font-definition: url("project://database/Assets/Fonts/AoboshiOne-Regular.ttf?fileID=12800000&guid=c2442f84838de456182f6efa59c71d7a&type=3#AoboshiOne-Regular");
     padding-top: 10px;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 
 .item-icon {
