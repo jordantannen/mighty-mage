@@ -43,26 +43,38 @@ public class PlayerController : MonoBehaviour
     {
         m_healthHandler.OnDeath -= PlayerDied;
     }
-    
-    private void OnMove(InputValue movementValue)
+
+    private void ReadMovementInput()
     {
-        // Movement
-        Vector2 movementVector = movementValue.Get<Vector2>();
-        m_movementX = movementVector.x; 
-        m_movementY = movementVector.y; 
+        m_movementX = 0f;
+        m_movementY = 0f;
+        
+        if (Keyboard.current.wKey.isPressed) m_movementY += 1f;
+        if (Keyboard.current.sKey.isPressed) m_movementY -= 1f;
+        if (Keyboard.current.dKey.isPressed) m_movementX += 1f;
+        if (Keyboard.current.aKey.isPressed) m_movementX -= 1f;
+        
+        // Normalize diagonal movement
+        Vector2 movementVector = new Vector2(m_movementX, m_movementY);
+        if (movementVector.sqrMagnitude > 1f)
+        {
+            movementVector.Normalize();
+            m_movementX = movementVector.x;
+            m_movementY = movementVector.y;
+        }
         
         // Visuals
         m_spriteFlipper.FlipSprite(m_movementX);
         bool isMoving = movementVector.sqrMagnitude > 0;
         m_spriteAnimator.SetBool(m_isMovingHash, isMoving);
     }
-    
+
     private void FixedUpdate()
     {
         if (m_knockbackHandler.IsKnockedBack) return;
         
         Vector3 movement = new Vector3 (m_movementX, 0.0f, m_movementY);
-        m_rb.linearVelocity= movement * m_speed; 
+        m_rb.linearVelocity= movement * m_speed;
     }
 
     private void OnCollisionStay(Collision other)
@@ -74,16 +86,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
+
     private void Update()
     {
+        ReadMovementInput();
+        
         // TODO: REMOVE THIS!
         if (Keyboard.current.tKey.wasPressedThisFrame)
         {
             TakeDamage(10, Vector3.forward);
         }
     }
-    
+
 
     private void PlayerDied()
     {
