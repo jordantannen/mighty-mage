@@ -44,20 +44,21 @@ public class WeaponBaseStats
 
     /// <summary>
     /// Calculates a stat value with modifiers applied.
-    /// Formula: base * (1 + percentMod) + flatMod
+    /// Formula: base * (1 + percentMod/100) + flatMod
+    /// Note: percentMod is stored as whole numbers (e.g., 20 = 20%)
     /// </summary>
     private float CalculateStat(float baseValue, StatType stat)
     {
         m_percentMods.TryGetValue(stat, out float percentMod);
         m_flatMods.TryGetValue(stat, out float flatMod);
-        return baseValue * (1f + percentMod) + flatMod;
+        return baseValue * (1f + percentMod / 100f) + flatMod;
     }
 
     private int CalculateStatInt(int baseValue, StatType stat)
     {
         m_percentMods.TryGetValue(stat, out float percentMod);
         m_flatMods.TryGetValue(stat, out float flatMod);
-        return Mathf.RoundToInt(baseValue * (1f + percentMod) + flatMod);
+        return Mathf.RoundToInt(baseValue * (1f + percentMod / 100f) + flatMod);
     }
 
     // ============================================
@@ -93,4 +94,3 @@ public class WeaponBaseStats
     public string Description => m_baseData.Description;
     public Sprite Icon => m_baseData.Icon;
 }
-
