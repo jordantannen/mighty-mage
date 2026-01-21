@@ -5,25 +5,89 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [Serializable] public class SpawnRateEntry
+    {
+        public int round = 1;
+        public float spawnInterval = 2f;
+    }
+    
+    [Header("References")]
+    [SerializeField] private GameManager m_gameManager;
+    
     [Header("Spawn Settings")]
     [SerializeField] private GameObject m_enemyPrefab;
     [SerializeField] private Transform m_playerTarget;
     [SerializeField] private float m_spawnDistance = 10f; // From player
     [SerializeField] private float m_spawnRadiusVariation = 0.5f; 
-    [SerializeField] private float m_spawnRate = 2f;
     [SerializeField] private int m_preallocateCount = 20;
+    
+    [Header("Round Configuration")]
+    [SerializeField] private int m_startRound = 1;
+    [SerializeField] private List<SpawnRateEntry> m_spawnRates = new List<SpawnRateEntry>
+    {
+        new SpawnRateEntry { round = 1, spawnInterval = 2f }
+    };
     
     private GameObjectPool m_enemyPool;
     private readonly Dictionary<GameObject, Action> m_deathHandlers = new Dictionary<GameObject, Action>();
+    private bool m_isSpawning;
 
     private void Awake()
     {
         CreatePool();
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        StartSpawning(m_spawnRate);
+        if (m_gameManager != null)
+        {
+            m_gameManager.OnRoundStarted += OnRoundStarted;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (m_gameManager != null)
+        {
+            m_gameManager.OnRoundStarted -= OnRoundStarted;
+        }
+    }
+
+    private void OnRoundStarted(int round)
+    {
+        StopSpawning();
+        
+        if (IsActiveForRound(round))
+        {
+            float spawnInterval = GetSpawnInterval(round);
+            StartSpawning(spawnInterval);
+        }
+    }
+    
+    private bool IsActiveForRound(int round)
+    {
+        return round >= m_startRound;
+    }
+    
+    private float GetSpawnInterval(int round)
+    {
+        m_spawnRates.Sort((a, b) => a.round.CompareTo(b.round));
+        
+        float currentInterval = m_spawnRates[0].spawnInterval;
+        
+        foreach (var entry in m_spawnRates)
+        {
+            if (entry.round <= round)
+            {
+                currentInterval = entry.spawnInterval;
+            }
+            else
+            {
+                break;
+            }
+        }
+        
+        return currentInterval;
     }
 
     private void CreatePool()
@@ -39,6 +103,9 @@ public class EnemySpawner : MonoBehaviour
     /// <param name="spawnRate"> Time in seconds between spawns </param>
     public void StartSpawning(float spawnRate)
     {
+        if (m_isSpawning) return;
+        
+        m_isSpawning = true;
         StartCoroutine(SpawnRoutine(spawnRate));
     }
 
@@ -47,6 +114,7 @@ public class EnemySpawner : MonoBehaviour
     /// </summary>
     public void StopSpawning()
     {
+        m_isSpawning = false;
         StopAllCoroutines();
     }
 

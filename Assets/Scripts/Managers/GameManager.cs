@@ -7,7 +7,8 @@ public class GameManager : MonoBehaviour
     [Header("Setup")]
     [SerializeField] private WeaponManager m_weaponManager;
     [SerializeField] private UpgradeSelectionUI m_upgradeSelectionUI;
-    
+    [SerializeField] private PlayerController m_playerController;
+    [SerializeField] private MainMenuUI m_gameOverUI;
     
     [Header("Game Settings")]
     [SerializeField] private float m_roundDuration = 15f;
@@ -17,6 +18,8 @@ public class GameManager : MonoBehaviour
     
     private int m_currentRound = 1;
     private float m_timeRemaining;
+
+    public event Action<int> OnRoundStarted;
 
     public enum GameState
     {
@@ -28,6 +31,27 @@ public class GameManager : MonoBehaviour
 
     private GameState m_currentState;
     
+    private void Awake()
+    {
+        if (m_playerController == null)
+        {
+            Debug.LogError("GameManager: PlayerController is not assigned", this);
+            enabled = false;
+        }
+        
+        if (m_weaponManager == null)
+        {
+            Debug.LogError("GameManager: WeaponManager is not assigned", this);
+            enabled = false;
+        }
+        
+        if (m_upgradeSelectionUI == null)
+        {
+            Debug.LogError("GameManager: UpgradeSelectionUI is not assigned", this);
+            enabled = false;
+        }
+    }
+    
     private void OnEnable()
     {
         Time.timeScale = 0f;
@@ -35,6 +59,11 @@ public class GameManager : MonoBehaviour
         {
             m_upgradeSelectionUI.OnUpgradeChosen += OnUpgradeSelected;
             m_upgradeSelectionUI.OnWeaponChosen += OnWeaponSelected;
+        }
+
+        if (m_playerController != null)
+        {
+            m_playerController.OnPlayerDeath += GameOver;
         }
     }
     
@@ -44,6 +73,11 @@ public class GameManager : MonoBehaviour
         {
             m_upgradeSelectionUI.OnUpgradeChosen -= OnUpgradeSelected;
             m_upgradeSelectionUI.OnWeaponChosen -= OnWeaponSelected;
+        }
+        
+        if (m_playerController != null)
+        {
+            m_playerController.OnPlayerDeath -= GameOver;
         }
     }
     
@@ -71,6 +105,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         m_timeRemaining = m_roundDuration;
         m_currentState = GameState.InRound;
+        OnRoundStarted?.Invoke(m_currentRound);
         Debug.Log($"Starting round {m_currentRound}");
     }
 
@@ -100,7 +135,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // No upgrades available, start next round
             StartRound();
         }
     }
@@ -117,9 +151,21 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // No weapons available, start next round
             StartRound();
         }
+    }
+
+    private void GameOver()
+    {
+        m_currentState = GameState.GameOver;
+        Time.timeScale = 0f;
+        
+        if (m_gameOverUI != null)
+        {
+            m_gameOverUI.Show();
+        }
+        
+        Debug.Log("Game Over.");
     }
     
     private void OnUpgradeSelected(UpgradeData upgrade)
