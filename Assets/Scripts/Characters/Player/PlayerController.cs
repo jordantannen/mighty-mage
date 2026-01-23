@@ -99,14 +99,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         ReadMovementInput();
-        
-        // TODO: REMOVE THIS!
-        if (Keyboard.current.tKey.wasPressedThisFrame)
-        {
-            TakeDamage(10, Vector3.forward);
-        }
     }
-
 
     private void PlayerDied()
     {
