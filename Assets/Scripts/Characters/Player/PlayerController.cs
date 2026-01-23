@@ -1,8 +1,10 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(HealthHandler))]
 [RequireComponent(typeof(KnockbackHandler))]
 public class PlayerController : MonoBehaviour
@@ -11,6 +13,11 @@ public class PlayerController : MonoBehaviour
     public event Action OnPlayerDeath;
     
     [SerializeField] private float m_speed = 3;
+
+    [Header("Sound")]
+    [SerializeField] private AudioClip m_damageSound;
+    [SerializeField] private float m_pitchLowerBound = 0.9f;
+    [SerializeField] private float m_pitchUpperBound = 1.1f;
     
     [Header("Visuals")]
     [SerializeField] private SpriteFlipper m_spriteFlipper;
@@ -19,6 +26,7 @@ public class PlayerController : MonoBehaviour
     private const string k_IsMovingParam = "IsMoving";
     
     private Rigidbody m_rb;
+    private AudioSource m_audioSource;
     private HealthHandler m_healthHandler;
     private KnockbackHandler m_knockbackHandler;
     private float m_movementX;
@@ -29,6 +37,7 @@ public class PlayerController : MonoBehaviour
         m_rb = GetComponent<Rigidbody>();
         m_knockbackHandler = GetComponent<KnockbackHandler>();
         m_healthHandler = GetComponent<HealthHandler>();
+        m_audioSource = GetComponent<AudioSource>();
         m_healthHandler.Initialize();
         
         m_isMovingHash = Animator.StringToHash(k_IsMovingParam);
@@ -109,6 +118,8 @@ public class PlayerController : MonoBehaviour
         if (m_healthHandler.TakeDamage(damage))
         {
             m_knockbackHandler.ApplyKnockback(knockbackDirection);
+            m_audioSource.pitch = Random.Range(m_pitchLowerBound, m_pitchUpperBound);
+            m_audioSource.PlayOneShot(m_damageSound);
         }
     }
 
