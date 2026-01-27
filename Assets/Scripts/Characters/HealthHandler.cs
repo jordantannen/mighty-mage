@@ -32,6 +32,10 @@ public class HealthHandler : MonoBehaviour
     [Header("UI")]
     [SerializeField] private HealthBarUI m_healthBarUI;
     
+    public int CurrentHealth => m_currentHealth;
+    public int MaxHealth => m_maxHealth;
+    public float HealthPercentage => m_maxHealth > 0 ? (float)m_currentHealth / m_maxHealth : 1f;
+    
     private void Awake()
     {
         if (m_visualRenderer)

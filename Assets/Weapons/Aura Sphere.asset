@@ -15,7 +15,7 @@ MonoBehaviour:
   m_weaponName: Aura Sphere
   m_description: 'Automatically launch a targetted aura sphere that bounces between
     targets. '
-  m_icon: {fileID: 0}
+  m_icon: {fileID: -4795189933568339425, guid: 48af18c2734374944bd921dd18a27036, type: 3}
   m_targetingType: 4
   m_maxRange: 8
   m_damage: 10

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
   m_weaponName: Ice Blast
   m_description: A low damaging blast that slows enemies. Stay icey.
-  m_icon: {fileID: 0}
+  m_icon: {fileID: 5077431022703712294, guid: d856df25e5133459b8303713a18fd9d4, type: 3}
   m_targetingType: 3
   m_maxRange: 3
   m_damage: 2
