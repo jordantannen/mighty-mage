@@ -8,9 +8,11 @@ using UnityEngine.Serialization;
 public class UpgradeSelectionUI : MonoBehaviour
 {
     [FormerlySerializedAs("numberOfButtons")] [SerializeField] private int m_numberOfButtons = 3;
+    [SerializeField] private AudioClip m_buttonHoverSound;
     
     private VisualElement m_container;
     private UIDocument m_uiDocument;
+    private AudioSource m_audioSource;
     
     public event Action<UpgradeData> OnUpgradeChosen;
     public event Action<Weapon> OnWeaponChosen;
@@ -18,6 +20,7 @@ public class UpgradeSelectionUI : MonoBehaviour
     private void Start()
     {
         m_uiDocument = GetComponent<UIDocument>();
+        m_audioSource = GetComponent<AudioSource>();
         m_container = m_uiDocument.rootVisualElement.Q<VisualElement>("Container");
         Hide();
     }
@@ -40,6 +43,7 @@ public class UpgradeSelectionUI : MonoBehaviour
         {
             Button button = new Button();
             button.AddToClassList("button");
+            button.RegisterCallback<MouseEnterEvent>(evt => PlayButtonHover());
             
             // Add upgrade name at the top
             Label nameLabel = new Label(upgrade.UpgradeName);
@@ -76,6 +80,7 @@ public class UpgradeSelectionUI : MonoBehaviour
         {
             Button button = new Button();
             button.AddToClassList("button");
+            button.RegisterCallback<MouseEnterEvent>(evt => PlayButtonHover());
             
             Label nameLabel = new Label(weapon.WeaponName);
             nameLabel.AddToClassList("item-name");
@@ -113,5 +118,18 @@ public class UpgradeSelectionUI : MonoBehaviour
         Debug.Log($"Selected weapon: {weapon.WeaponName}");
         OnWeaponChosen?.Invoke(weapon);
         Hide();
+    }
+    
+    private void PlayButtonHover()
+    {
+        PlaySound(m_buttonHoverSound);
+    }
+    
+    private void PlaySound(AudioClip clip)
+    {
+        if (m_audioSource != null && clip != null)
+        {
+            m_audioSource.PlayOneShot(clip);
+        }
     }
 }
