@@ -1,0 +1,7 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/TimerStyle.uss?fileID=7433441132597879392&amp;guid=6a65a9b6678e4e45934e319eb17f6e37&amp;type=3#TimerStyle"/>
+    <ui:VisualElement name="TimerContainer" style="position: absolute; top: 20px; right: 20px; align-items: flex-end; flex-direction: row;">
+        <ui:Label text="Time Alive:  " name="TimeAlive" class="timer-label"/>
+        <ui:Label text="00:00" name="Timer" class="timer-label"/>
+    </ui:VisualElement>
+</ui:UXML>

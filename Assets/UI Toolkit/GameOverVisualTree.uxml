@@ -2,6 +2,7 @@
     <Style src="project://database/Assets/UI%20Toolkit/MenuStyle.uss?fileID=7433441132597879392&amp;guid=8ee5dd0d8d84d4c848854e6987c2e0db&amp;type=3#MenuStyle"/>
     <ui:VisualElement name="Container" style="flex-grow: 1; flex-direction: column; justify-content: center; align-items: center; background-color: rgba(65, 65, 65, 0.86);">
         <ui:Label text="Game Over :(" name="Title" class="header" style="color: rgb(229, 229, 229);"/>
+        <ui:Label text="You survived: 00:00" name="SurvivalTime" class="survival-time" style="color: rgb(229, 229, 229);"/>
         <ui:Button text="Play Again" name="Play" class="button" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;"/>
         <ui:Button text="Quit" name="Quit" class="button" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;"/>
     </ui:VisualElement>

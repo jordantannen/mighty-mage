@@ -1,0 +1,11 @@
+:root {
+}
+
+.timer-label {
+    -unity-font-definition: url("project://database/Assets/Fonts/AoboshiOne-Regular.ttf?fileID=12800000&guid=c2442f84838de456182f6efa59c71d7a&type=3#AoboshiOne-Regular");
+    -unity-text-align: middle-right;
+    font-size: 24px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}

@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private WeaponManager m_weaponManager;
     [SerializeField] private UpgradeSelectionUI m_upgradeSelectionUI;
     [SerializeField] private PlayerController m_playerController;
-    [SerializeField] private MainMenuUI m_gameOverUI;
+    [SerializeField] private GameOverUI m_gameOverUI;
+    [SerializeField] private TimerUI m_timerUI;
     
     [Header("Game Settings")]
     [SerializeField] private float m_roundDuration = 15f;
@@ -160,9 +161,20 @@ public class GameManager : MonoBehaviour
         m_currentState = GameState.GameOver;
         Time.timeScale = 0f;
         
-        if (m_gameOverUI != null)
+        if (m_timerUI != null)
         {
-            m_gameOverUI.Show();
+            m_timerUI.StopTimer();
+            float survivalTime = m_timerUI.GetSurvivalTime();
+            m_timerUI.Hide();
+            
+            if (m_gameOverUI != null)
+            {
+                m_gameOverUI.Show(survivalTime);
+            }
+        }
+        else if (m_gameOverUI != null)
+        {
+            m_gameOverUI.Show(0f);
         }
         
         Debug.Log("Game Over.");
