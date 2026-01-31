@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8899891bef544ba782a387330c90aa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthHandler
-  m_maxHealth: 20
+  m_maxHealth: 10
   m_currentHealth: 0
   m_hasIFrames: 0
   m_iFrameDuration: 1
