@@ -5,7 +5,8 @@
     -unity-font-definition: url("project://database/Assets/Fonts/AoboshiOne-Regular.ttf?fileID=12800000&guid=c2442f84838de456182f6efa59c71d7a&type=3#AoboshiOne-Regular");
     -unity-text-align: upper-center;
     -unity-font-style: normal;
-    font-size: 64px;
+    font-size: 72px;
+    color: rgb(207, 207, 207);
 }
 
 .button {
@@ -41,4 +42,3 @@
     margin-top: 20px;
     margin-bottom: 10px;
 }
-
