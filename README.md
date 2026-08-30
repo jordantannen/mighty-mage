@@ -2,6 +2,8 @@
 
 A fast-paced HD-2D _Brotato_-like action game where you play as a powerful mage fending off endless waves of enemies using an arsenal of magical weapons. Originally created for the 2025 [Secret Santa Game Jam](https://itch.io/jam/secret-santa-2025). 
 
+<img width="640" height="346" alt="2026-08-29 15 41 50" src="https://github.com/user-attachments/assets/9d0de425-2d04-4f00-9b05-d8e93f4f028f" />
+
 ## Gameplay
 
 Survive increasingly difficult waves of enemies while earning powerful weapons and upgrades between rounds. 
